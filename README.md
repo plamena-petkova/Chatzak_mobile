@@ -1,1 +1,0 @@
-# Chatzak_mobile
