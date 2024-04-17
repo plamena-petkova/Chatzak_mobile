@@ -1,12 +1,15 @@
 import { StatusBar } from "expo-status-bar";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "../Chatzak_mobile/screens/HomeScreen";
 import LoginScreen from "./screens/LoginScreen";
-import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import * as Font from "expo-font";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 SplashScreen.preventAutoHideAsync();
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
@@ -32,5 +35,12 @@ export default function App() {
     return null;
   }
 
-  return <HomeScreen />;
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Login" component={LoginScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
 }

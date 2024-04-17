@@ -1,8 +1,12 @@
 import { StatusBar } from "expo-status-bar";
-import { Button, Text, View, Image, Pressable } from "react-native";
+import { Text, View, Image, Pressable } from "react-native";
 import { globalStyles } from "../styles/global";
+import CustomButton from "../components/CustomButton";
+import { useNavigation } from "@react-navigation/native";
 
-export default function HomeScreen({ navigation }) {
+export default function HomeScreen() {
+  const navigation = useNavigation();
+
   return (
     <View style={globalStyles.container}>
       <Image
@@ -16,13 +20,12 @@ export default function HomeScreen({ navigation }) {
         colleagues. Chatzak offers a seamless and user-friendly experience.
       </Text>
 
-      <Pressable style={globalStyles.button}>
-        <Text style={globalStyles.textBtn}>Login</Text>
-      </Pressable>
+      <CustomButton
+        title="Login"
+        onPress={() => navigation.navigate("Login")}
+      />
 
-      <Pressable style={globalStyles.button}>
-        <Text style={globalStyles.textBtn}>Sign Up</Text>
-      </Pressable>
+      <CustomButton title="Sign Up" />
 
       <View style={globalStyles.imgContainer}>
         <Image
