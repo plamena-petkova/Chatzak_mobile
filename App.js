@@ -1,26 +1,36 @@
 import { StatusBar } from "expo-status-bar";
-import { Button, StyleSheet, Text, TextInput, View, Image } from "react-native";
 import HomeScreen from "../Chatzak_mobile/screens/HomeScreen";
 import LoginScreen from "./screens/LoginScreen";
-import {useFonts} from "expo-font";
-import { useState } from "react";
-import  AppLoading from "expo-app-loading";
+import { useFonts } from "expo-font";
+import * as SplashScreen from "expo-splash-screen";
+import * as Font from "expo-font";
+import { useCallback, useEffect, useState } from "react";
 
+SplashScreen.preventAutoHideAsync();
 
 export default function App() {
-  let [fontsLoaded] = useFonts({
-    'RobotoRegular': require("../Chatzak_mobile/assets/fonts/RobotoRegular.ttf"),
-});
+  const [appIsReady, setAppIsReady] = useState(false);
 
-  if (fontsLoaded) {
-    return (
-      <>
-        <HomeScreen />
-      </>
-    );
-  } else {
-    return (
-      <AppLoading />
-    );
+  useEffect(() => {
+    async function prepare() {
+      try {
+        await Font.loadAsync({
+          RobotoRegular: require("../Chatzak_mobile/assets/fonts/RobotoRegular.ttf"),
+        });
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+      } catch (e) {
+        console.warn(e);
+      } finally {
+        setAppIsReady(true);
+      }
+    }
+
+    prepare();
+  }, []);
+
+  if (!appIsReady) {
+    return null;
   }
+
+  return <HomeScreen />;
 }
