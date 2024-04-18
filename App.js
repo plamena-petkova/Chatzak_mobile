@@ -6,6 +6,12 @@ import LoginScreen from "./screens/LoginScreen";
 import * as SplashScreen from "expo-splash-screen";
 import * as Font from "expo-font";
 import { useEffect, useState } from "react";
+import RegisterScreen from "./screens/RegisterScreen";
+import UsersScreen from "./screens/UsersScreen";
+import UsersChat from "./screens/UserChat";
+import { Provider } from "react-redux";
+import  {store, persistor} from "../Chatzak_mobile/store/store";
+import { PersistGate } from "redux-persist/integration/react";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -36,11 +42,18 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Login" component={LoginScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="Home">
+            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="Register" component={RegisterScreen} />
+            <Stack.Screen name="UsersScreen" component={UsersScreen} />
+            <Stack.Screen name="UserChat" component={UsersChat} />
+          </Stack.Navigator>
+        </NavigationContainer>
+        </PersistGate>
+    </Provider>
   );
 }

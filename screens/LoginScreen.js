@@ -1,67 +1,60 @@
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
-import { Button, StyleSheet, Text, View, Image, TextInput } from "react-native";
+import { Text, View, Image, TextInput } from "react-native";
+import { globalStyles } from "../styles/global";
+import CustomButton from "../components/CustomButton";
+import { useNavigation } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
+import { login } from "../store/authReducer";
 
-export default function LoginScreen({ navigation }) {
+export default function LoginScreen() {
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+
   const [username, setUsername] = useState("");
-  const [pass, setPass] = useState("");
+  const [password, setPassword] = useState("");
 
+
+  const submitLoginHandler = async (event) => {
+    console.log('Login');
+
+    const data = { username, password };
+
+  if (username && password) {
+    dispatch(login(data))
+      .unwrap()
+      .then(() => {
+        navigation.navigate('Home');
+        console.log('Success');
+      })
+      .catch((error) => {
+        console.error("Error", error.message);
+        return;
+      });
+  }
+  }
   return (
-    <View style={styles.container}>
+    <View style={globalStyles.container}>
       <Image
-        style={styles.logo}
+        style={globalStyles.logo}
         source={require("../assets/chatzakLogo.png")}
       />
-
+      <Text style={globalStyles.heading}>Login</Text>
       <TextInput
         placeholder="Username"
-        style={styles.input}
+        style={globalStyles.input}
         onChangeText={(value) => setUsername(value)}
       />
       <TextInput
         placeholder="Password"
-        style={styles.input}
-        onChangeText={(value) => setPass(value)}
+        style={globalStyles.input}
+        onChangeText={(value) => setPassword(value)}
       />
-      <View style={styles.button}>
-        <Button
-          title="Login"
-          onPress={() => console.log("User and pass", username, pass)}
-        />
-      </View>
+      <CustomButton title="Login" onPress={submitLoginHandler} />
 
       <Text>
-        Username:{username} and Pass:{pass}
+        Username:{username} and Pass:{password}
       </Text>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    display: "flex",
-    justifyContent: "center",
-    alignContent: "center",
-    flex: 1,
-    backgroundColor: "#C7EBF9",
-    padding: 30,
-  },
-  input: {
-    borderWidth: 1,
-    borderRadius: 7,
-    borderColor: "#777",
-    padding: 8,
-    marginTop: 10,
-    marginBottom: 10,
-  },
-  button: {
-    marginTop: 15,
-  },
-
-  logo: {
-    width: "100%",
-    height: "25%",
-    marginBottom: 20,
-    borderRadius:7
-  },
-});

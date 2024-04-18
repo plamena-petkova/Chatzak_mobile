@@ -55,4 +55,12 @@ export const globalStyles = StyleSheet.create({
       letterSpacing: 0.25,
       color: 'white',
     },
+    input: {
+        borderWidth: 1,
+        borderRadius: 7,
+        borderColor: "#777",
+        padding: 8,
+        marginTop: 10,
+        marginBottom: 10,
+      },
 });
