@@ -16,7 +16,7 @@ export default function LoginScreen() {
 
 
   const submitLoginHandler = async (event) => {
-    console.log('Login');
+  
 
     const data = { username, password };
 
@@ -25,7 +25,6 @@ export default function LoginScreen() {
       .unwrap()
       .then(() => {
         navigation.navigate('Home');
-        console.log('Success');
       })
       .catch((error) => {
         console.error("Error", error.message);
@@ -33,6 +32,7 @@ export default function LoginScreen() {
       });
   }
   }
+
   return (
     <View style={globalStyles.container}>
       <Image

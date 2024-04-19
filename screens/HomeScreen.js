@@ -12,8 +12,6 @@ export default function HomeScreen() {
   const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
 
-  console.log("User", user?.username);
-
   return (
     <View style={globalStyles.container}>
       <Image
@@ -40,7 +38,6 @@ export default function HomeScreen() {
         </>
       ) : (
         <>
-          {" "}
           <CustomButton
             title="Login"
             onPress={() => navigation.navigate("Login")}

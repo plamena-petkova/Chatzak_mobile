@@ -1,3 +1,4 @@
+
 import { StatusBar } from "expo-status-bar";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -12,6 +13,8 @@ import UsersChat from "./screens/UserChat";
 import { Provider } from "react-redux";
 import  {store, persistor} from "../Chatzak_mobile/store/store";
 import { PersistGate } from "redux-persist/integration/react";
+
+
 
 SplashScreen.preventAutoHideAsync();
 
@@ -37,13 +40,14 @@ export default function App() {
     prepare();
   }, []);
 
+
   if (!appIsReady) {
     return null;
   }
 
   return (
     <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
+        
         <NavigationContainer>
           <Stack.Navigator initialRouteName="Home">
             <Stack.Screen name="Home" component={HomeScreen} />
@@ -53,7 +57,7 @@ export default function App() {
             <Stack.Screen name="UserChat" component={UsersChat} />
           </Stack.Navigator>
         </NavigationContainer>
-        </PersistGate>
+
     </Provider>
   );
 }
