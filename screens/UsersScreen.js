@@ -18,38 +18,35 @@ import { useNavigation } from "@react-navigation/native";
 import { setCurrentChat } from "../store/chatReducer";
 import { useDispatch, useSelector } from "react-redux";
 
-
 export default function UsersScreen() {
-
   const dispatch = useDispatch();
 
   const allUsers = useSelector((state) => state.auth.allUsers);
 
-  const navigation = useNavigation()
+  const navigation = useNavigation();
 
-const handleUserChat = (user) => {
-  console.log('User', user);
-  dispatch(setCurrentChat(user));
-  navigation.navigate('UserChat');
-}
-
+  const handleUserChat = (user) => {
+    console.log("User", user);
+    dispatch(setCurrentChat(user));
+    navigation.navigate("UserChat");
+  };
 
   return (
-    <View style={globalStyles.container}>
-      {allUsers.map((user) => {
-        return (
-          <ScrollView key={user._id}>
-            <View >
+    <ScrollView>
+      <View style={globalStyles.container}>
+        {allUsers.map((user) => {
+          return (
+            <View key={user._id}>
               <UserChatButton
                 user={user}
                 onPress={() => handleUserChat(user)}
                 style={globalStyles.text}
               />
             </View>
-          </ScrollView>
-        );
-      })}
-    </View>
+          );
+        })}
+      </View>
+    </ScrollView>
   );
 }
 
