@@ -10,7 +10,8 @@ export const globalStyles = StyleSheet.create({
     fontSize: 18,
     fontFamily: "RobotoRegular",
     marginBottom:20,
-    textAlign:'justify'
+    textAlign:'justify',
+    flex:1
   },
   logo: {
     width: "100%",
@@ -63,4 +64,26 @@ export const globalStyles = StyleSheet.create({
         marginTop: 10,
         marginBottom: 10,
       },
+    userChatButton:{
+      alignItems: 'flex-start',
+      justifyContent: 'flex-start',
+      //paddingVertical: 12,
+      //paddingHorizontal: 32,
+      //borderRadius: 4,
+      //elevation: 3,
+      padding:20,
+      backgroundColor: '#DDE7EE',
+      marginBottom:15,
+      marginTop:15,
+      border:1,
+      borderRadius:4,
+      
+    },
+    textUserChatBtn:{
+      fontSize: 16,
+      lineHeight: 21,
+      fontWeight: 'bold',
+      letterSpacing: 0.25,
+      color: 'black',
+    }
 });

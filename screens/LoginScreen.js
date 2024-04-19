@@ -5,7 +5,7 @@ import { globalStyles } from "../styles/global";
 import CustomButton from "../components/CustomButton";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
-import { login } from "../store/authReducer";
+import { fetchUsers, login } from "../store/authReducer";
 
 export default function LoginScreen() {
   const navigation = useNavigation();
@@ -14,24 +14,22 @@ export default function LoginScreen() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-
   const submitLoginHandler = async (event) => {
-  
-
     const data = { username, password };
 
-  if (username && password) {
-    dispatch(login(data))
-      .unwrap()
-      .then(() => {
-        navigation.navigate('Home');
-      })
-      .catch((error) => {
-        console.error("Error", error.message);
-        return;
-      });
-  }
-  }
+    if (username && password) {
+      dispatch(login(data))
+        .unwrap()
+        .then(() => {
+          navigation.navigate("Home");
+          dispatch(fetchUsers());
+        })
+        .catch((error) => {
+          console.error("Error", error.message);
+          return;
+        });
+    }
+  };
 
   return (
     <View style={globalStyles.container}>

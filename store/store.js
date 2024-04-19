@@ -1,6 +1,7 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import authReducer from './authReducer';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import chatReducer from './chatReducer';
+//import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   persistReducer,
   FLUSH,
@@ -15,21 +16,23 @@ import {
   initMessageListener,
 } from 'redux-state-sync';
 import persistStore from 'redux-persist/es/persistStore';
-//import chatReducer from './chatReducer';
 
+
+/*
 const persistConfig = {
   key: 'root',
   version:1, 
   storage:AsyncStorage,
   whitelist: ['auth']
 }
+*/
 
 const reducer = combineReducers({
   auth: authReducer,
-  //chat: chatReducer,
+  chat: chatReducer,
 });
 
-const persistedReducer = persistReducer(persistConfig, reducer);
+//const persistedReducer = persistReducer(persistConfig, reducer);
 
 export const store = configureStore({
   reducer,

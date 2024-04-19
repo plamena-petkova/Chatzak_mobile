@@ -5,6 +5,7 @@ import CustomButton from "../components/CustomButton";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../store/authReducer";
+import { ScrollView } from "react-native-web";
 
 export default function HomeScreen() {
   const navigation = useNavigation();
@@ -13,6 +14,7 @@ export default function HomeScreen() {
   const dispatch = useDispatch();
 
   return (
+    <ScrollView>
     <View style={globalStyles.container}>
       <Image
         style={globalStyles.logo}
@@ -58,5 +60,6 @@ export default function HomeScreen() {
 
       <StatusBar style="auto" />
     </View>
+    </ScrollView>
   );
 }
