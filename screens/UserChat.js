@@ -1,10 +1,10 @@
-import { Image, Text, View, StyleSheet, ScrollView } from "react-native";
+import { Image, Text, View, StyleSheet, ScrollView, TextInput } from "react-native";
 import { globalStyles } from "../styles/global";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { getAllMessages } from "../store/chatReducer";
 import UserChatButton from "../components/UserChatButton";
-import { TextInput } from "react-native-web";
+
 
 export default function UsersChat() {
   const dispatch = useDispatch();
@@ -41,7 +41,6 @@ export default function UsersChat() {
         </View>
       </View>
       <ScrollView>
-        <View>
           {messages.map((msg) => {
             return (
               <View key={msg.id}>
@@ -57,7 +56,7 @@ export default function UsersChat() {
               </View>
             );
           })}
-        </View>
+
       </ScrollView>
       <TextInput
         placeholder="Type your message..."

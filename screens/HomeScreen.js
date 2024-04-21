@@ -1,11 +1,11 @@
 import { StatusBar } from "expo-status-bar";
-import { Text, View, Image, Pressable } from "react-native";
+import { Text, View, Image, Pressable, ScrollView } from "react-native";
 import { globalStyles } from "../styles/global";
 import CustomButton from "../components/CustomButton";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../store/authReducer";
-import { ScrollView } from "react-native-web";
+
 
 export default function HomeScreen() {
   const navigation = useNavigation();

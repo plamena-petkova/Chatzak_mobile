@@ -9,9 +9,10 @@ import { useEffect, useState } from "react";
 import RegisterScreen from "./screens/RegisterScreen";
 import UsersScreen from "./screens/UsersScreen";
 import UsersChat from "./screens/UserChat";
-import { Provider, useDispatch } from "react-redux";
+import { Provider } from "react-redux";
 import { store, persistor } from "../Chatzak_mobile/store/store";
-import { PersistGate } from "redux-persist/integration/react";
+import { PersistGate } from "redux-persist/lib/integration/react";
+//import { PersistGate } from "redux-persist/es/integration/react";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -43,6 +44,7 @@ export default function App() {
 
   return (
     <Provider store={store}>
+
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Home">
           <Stack.Screen name="Home" component={HomeScreen} />
@@ -52,6 +54,7 @@ export default function App() {
           <Stack.Screen name="UserChat" component={UsersChat} />
         </Stack.Navigator>
       </NavigationContainer>
+
     </Provider>
   );
 }

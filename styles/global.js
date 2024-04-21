@@ -114,10 +114,11 @@ export const globalStyles = StyleSheet.create({
     width: "100vw",
     height: "90vh",
     justifyContent: "space-between",
+    backgroundColor: "#C7EBF9",
   },
   messageChipFromMe: {
     borderWidth: 1,
-    borderRadius: 7,
+    borderRadius: 13,
     borderBottomRightRadius: 0,
     borderColor: "#777",
     padding: 8,
