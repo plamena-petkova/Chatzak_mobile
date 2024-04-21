@@ -17,18 +17,21 @@ import UserChatButton from "../components/UserChatButton";
 import { useNavigation } from "@react-navigation/native";
 import { setCurrentChat } from "../store/chatReducer";
 import { useDispatch, useSelector } from "react-redux";
+import { socket } from "../socket";
 
 export default function UsersScreen() {
   const dispatch = useDispatch();
 
   const allUsers = useSelector((state) => state.auth.allUsers);
+  const currentUser = useSelector((state) => state.auth.user);
 
   const navigation = useNavigation();
 
+
   const handleUserChat = (user) => {
-    console.log("User", user);
     dispatch(setCurrentChat(user));
     navigation.navigate("UserChat");
+
   };
 
   return (

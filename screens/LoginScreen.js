@@ -1,11 +1,12 @@
 import { StatusBar } from "expo-status-bar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Text, View, Image, TextInput } from "react-native";
 import { globalStyles } from "../styles/global";
 import CustomButton from "../components/CustomButton";
 import { useNavigation } from "@react-navigation/native";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchUsers, login } from "../store/authReducer";
+import { socket } from "../socket";
 
 export default function LoginScreen() {
   const navigation = useNavigation();
@@ -13,6 +14,7 @@ export default function LoginScreen() {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const currentUser = useSelector((state) => state.auth.user);
 
   const submitLoginHandler = async (event) => {
     const data = { username, password };

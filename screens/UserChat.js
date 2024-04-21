@@ -3,7 +3,11 @@ import { globalStyles } from "../styles/global";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { getAllMessages } from "../store/chatReducer";
-import UserChatButton from "../components/UserChatButton";
+import SendButton from "../components/SendButton";
+import { socket } from "../socket";
+import axios from "axios";
+import { sendMessageRoute } from "../utils/apiRoutes";
+import { setOnlineUsers } from "../store/authReducer";
 
 
 export default function UsersChat() {
@@ -13,15 +17,72 @@ export default function UsersChat() {
   const messages = useSelector((state) => state.chat.messages);
 
   const [msg, setMsg] = useState("");
-  console.log("MSG", msg);
+
+  const [arrivalMsg, setArrivalMsg] = useState("");
+
+
+
+  useEffect(() => {
+    if (socket) {
+      console.log('message if socket', socket);
+      socket.on("msg-receive", (data) => {
+        console.log('message=>data', data);
+        setArrivalMsg({ fromSelf: false, message: data.message });
+      });
+      socket.on("msg-edited", (data) => {
+        setArrivalMsg({ fromSelf: false, message: data.message });
+      });
+      socket.on("update-users", (users) => {
+        dispatch(setOnlineUsers(users));
+      });
+    };
+
+    return () => {
+      socket.off("msg-receive");
+      socket.off("msg-edited");
+      socket.off("update-users");
+      socket.disconnect();
+    };
+  }, []);
+
+  const handleSendMsg = async (msg) => {
+    await axios.post(sendMessageRoute, {
+      from: currentUser?._id,
+      to: currentChat?._id,
+      message: msg,
+    });
+
+    socket.emit("send-msg", {
+      to: currentChat._id,
+      from: currentUser._id,
+      message: msg,
+    });
+
+    const msgs = [...msg];
+    msgs.push({ fromSelf: true, message: msg });
+
+    setMsg(msgs);
+  };
 
   useEffect(() => {
     if (currentChat) {
       dispatch(getAllMessages({ from: currentUser._id, to: currentChat._id }));
     }
-  }, [dispatch, currentChat, getAllMessages, currentUser]);
+  }, [dispatch, currentChat, getAllMessages, currentUser, msg]);
 
-  console.log("msgs", messages);
+  useEffect(() => {
+    if (currentUser) {
+      socket.emit("add-user", currentUser._id);
+    }
+  }, [currentChat]);
+
+  useEffect(() => {
+    arrivalMsg && setMsg((prev) => [...prev, arrivalMsg]);
+  }, [arrivalMsg]);
+
+  console.log('Arrival', arrivalMsg);
+  console.log('Message', msg);
+
 
   return (
     <View style={globalStyles.inputContainer}>
@@ -58,11 +119,14 @@ export default function UsersChat() {
           })}
 
       </ScrollView>
+      <View style={globalStyles.inputMsg}>
       <TextInput
         placeholder="Type your message..."
-        style={globalStyles.inputMsg}
         onChangeText={(msg) => setMsg(msg)}
+        style={globalStyles.messageText}
       />
+      <SendButton title={'Send'} onPress={() => handleSendMsg(msg)}/>
+      </View>
     </View>
   );
 }

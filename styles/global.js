@@ -55,6 +55,27 @@ export const globalStyles = StyleSheet.create({
     fontWeight: "bold",
     letterSpacing: 0.25,
     color: "white",
+    paddingLeft:5
+  },
+  messageText:{
+    fontSize: 16,
+    color: "black",
+    paddingLeft:5
+  },
+  sendBtn: {
+    borderTopRightRadius: 4,
+    borderBottomRightRadius:4,
+    backgroundColor: "#2D5DA4",
+    padding:8,
+  },
+  inputMsg:{
+    flexDirection:'row',
+    borderWidth: 1,
+    borderRadius: 7,
+    borderColor: "#777",
+    alignItems: "center",
+    justifyContent: "space-between",
+    margin:5
   },
   input: {
     borderWidth: 1,
@@ -102,13 +123,6 @@ export const globalStyles = StyleSheet.create({
     border: 1,
     borderRadius: 4,
   },
-  inputMsg: {
-    borderWidth: 1,
-    borderRadius: 7,
-    borderColor: "#777",
-    padding: 8,
-    margin: 10,
-  },
   inputContainer: {
     position: "absolute",
     width: "100vw",
@@ -123,21 +137,22 @@ export const globalStyles = StyleSheet.create({
     borderColor: "#777",
     padding: 8,
     margin: 10,
-    backgroundColor: "pink",
+    backgroundColor: "#C3D5EA",
     justifyContent:'flex-start',
     marginLeft:75,
     marginRight:20
 
   },
   messageChipForMe: {
-    borderRadius: 7,
+    borderRadius: 13,
     borderWidth: 1,
     borderBottomLeftRadius: 0,
     padding: 8,
     margin: 10,
-    backgroundColor: "blue",
+    backgroundColor: "#4B8CE7",
     justifyContent:'flex-end',
     marginRight:75,
-    marginLeft:20
+    marginLeft:20,
+    color:'white'
   },
 });
