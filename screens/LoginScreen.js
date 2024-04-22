@@ -51,10 +51,6 @@ export default function LoginScreen() {
         onChangeText={(value) => setPassword(value)}
       />
       <CustomButton title="Login" onPress={submitLoginHandler} />
-
-      <Text>
-        Username:{username} and Pass:{password}
-      </Text>
     </View>
   );
 }

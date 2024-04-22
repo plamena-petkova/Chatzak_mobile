@@ -2,11 +2,8 @@ import {
   Image,
   Text,
   View,
-  StyleSheet,
-  ScrollView,
   TextInput,
   FlatList,
-  useWindowDimensions,
 } from "react-native";
 import { globalStyles } from "../styles/global";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,8 +17,6 @@ import { setOnlineUsers } from "../store/authReducer";
 
 export default function UsersChat() {
   const dispatch = useDispatch();
-
-  const {heightW, width, scale, fontScale} = useWindowDimensions();
 
   const currentChat = useSelector((state) => state.chat.currentChat);
   const currentUser = useSelector((state) => state.auth.user);
@@ -69,6 +64,7 @@ export default function UsersChat() {
     msgs.push({ fromSelf: true, message: msg });
 
     setMsg(msgs);
+
   };
 
   useEffect(() => {
@@ -131,7 +127,7 @@ export default function UsersChat() {
           onChangeText={(msg) => setMsg(msg)}
           style={globalStyles.messageText}
         />
-        <SendButton title={"Send"} onPress={() => handleSendMsg(msg)} />
+        <SendButton title={"Send"} onPress={handleSendMsg(msg)} />
       </View>
     </View>
   );
