@@ -6,7 +6,6 @@ import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../store/authReducer";
 
-
 export default function HomeScreen() {
   const navigation = useNavigation();
 
@@ -14,52 +13,47 @@ export default function HomeScreen() {
   const dispatch = useDispatch();
 
   return (
-    <ScrollView>
     <View style={globalStyles.container}>
-      <Image
-        style={globalStyles.logo}
-        source={require("../assets/chatzakLogo.png")}
-      />
-      <Text style={globalStyles.heading}>Welcome to Chatzak</Text>
-      <Text style={globalStyles.text}>
-        Chatzak is a modern chat application designed to connect people with
-        ease. Whether you're looking to chat with friends, family, or
-        colleagues. Chatzak offers a seamless and user-friendly experience.
-      </Text>
-      {user.username ? (
-        <>
-          <Text style={globalStyles.text}>Welcome, {user?.username}</Text>
-          <CustomButton
-            title="Chats"
-            onPress={() => navigation.navigate("UsersScreen")}
-          />
-          <CustomButton
-            title="Logout"
-            onPress={() => dispatch(logout())}
-          />
-        </>
-      ) : (
-        <>
-          <CustomButton
-            title="Login"
-            onPress={() => navigation.navigate("Login")}
-          />
-          <CustomButton
-            title="Sign Up"
-            onPress={() => navigation.navigate("Register")}
-          />
-        </>
-      )}
-
-      <View style={globalStyles.imgContainer}>
+      <ScrollView>
         <Image
-          style={globalStyles.homePicture}
-          source={require("../assets/home.png")}
+          style={globalStyles.logo}
+          source={require("../assets/chatzakLogo.png")}
         />
-      </View>
+        <Text style={globalStyles.heading}>Welcome to Chatzak</Text>
+        <Text style={globalStyles.text}>
+          Chatzak is a modern chat application designed to connect people with
+          ease. Whether you're looking to chat with friends, family, or
+          colleagues. Chatzak offers a seamless and user-friendly experience.
+        </Text>
+        {user.username ? (
+          <>
+            <Text style={globalStyles.text}>Welcome, {user?.username}</Text>
+            <CustomButton
+              title="Chats"
+              onPress={() => navigation.navigate("UsersScreen")}
+            />
+            <CustomButton title="Logout" onPress={() => dispatch(logout())} />
+          </>
+        ) : (
+          <>
+            <CustomButton
+              title="Login"
+              onPress={() => navigation.navigate("Login")}
+            />
+            <CustomButton
+              title="Sign Up"
+              onPress={() => navigation.navigate("Register")}
+            />
+          </>
+        )}
 
-      <StatusBar style="auto" />
+        <View style={globalStyles.imgContainer}>
+          <Image
+            style={globalStyles.homePicture}
+            source={require("../assets/home.png")}
+          />
+        </View>
+      </ScrollView>
     </View>
-    </ScrollView>
   );
 }

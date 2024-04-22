@@ -1,4 +1,13 @@
-import { Image, Text, View, StyleSheet, ScrollView, TextInput } from "react-native";
+import {
+  Image,
+  Text,
+  View,
+  StyleSheet,
+  ScrollView,
+  TextInput,
+  FlatList,
+  useWindowDimensions,
+} from "react-native";
 import { globalStyles } from "../styles/global";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -9,9 +18,11 @@ import axios from "axios";
 import { sendMessageRoute } from "../utils/apiRoutes";
 import { setOnlineUsers } from "../store/authReducer";
 
-
 export default function UsersChat() {
   const dispatch = useDispatch();
+
+  const {heightW, width, scale, fontScale} = useWindowDimensions();
+
   const currentChat = useSelector((state) => state.chat.currentChat);
   const currentUser = useSelector((state) => state.auth.user);
   const messages = useSelector((state) => state.chat.messages);
@@ -20,13 +31,9 @@ export default function UsersChat() {
 
   const [arrivalMsg, setArrivalMsg] = useState("");
 
-
-
   useEffect(() => {
     if (socket) {
-      console.log('message if socket', socket);
       socket.on("msg-receive", (data) => {
-        console.log('message=>data', data);
         setArrivalMsg({ fromSelf: false, message: data.message });
       });
       socket.on("msg-edited", (data) => {
@@ -35,7 +42,7 @@ export default function UsersChat() {
       socket.on("update-users", (users) => {
         dispatch(setOnlineUsers(users));
       });
-    };
+    }
 
     return () => {
       socket.off("msg-receive");
@@ -80,10 +87,6 @@ export default function UsersChat() {
     arrivalMsg && setMsg((prev) => [...prev, arrivalMsg]);
   }, [arrivalMsg]);
 
-  console.log('Arrival', arrivalMsg);
-  console.log('Message', msg);
-
-
   return (
     <View style={globalStyles.inputContainer}>
       <View style={globalStyles.chatScreenName}>
@@ -101,32 +104,36 @@ export default function UsersChat() {
           />
         </View>
       </View>
-      <ScrollView>
-          {messages.map((msg) => {
-            return (
-              <View key={msg.id}>
-                <Text
-                  style={
-                    msg.fromSelf
-                      ? globalStyles.messageChipFromMe
-                      : globalStyles.messageChipForMe
-                  }
-                >
-                  {msg.message}
-                </Text>
-              </View>
-            );
-          })}
-
-      </ScrollView>
-      <View style={globalStyles.inputMsg}>
-      <TextInput
-        placeholder="Type your message..."
-        onChangeText={(msg) => setMsg(msg)}
-        style={globalStyles.messageText}
+      <FlatList
+        inverted
+        data={[...messages].reverse()}
+        renderItem={(msg) => {
+          return (
+            <View key={msg.item.id}>
+              <Text
+                style={
+                  msg.item.fromSelf
+                    ? globalStyles.messageChipFromMe
+                    : globalStyles.messageChipForMe
+                }
+              >
+                {msg.item.message}
+              </Text>
+            </View>
+          );
+        }}
+        keyExtractor={(message) => message.id}
       />
-      <SendButton title={'Send'} onPress={() => handleSendMsg(msg)}/>
+
+      <View style={globalStyles.inputMsg}>
+        <TextInput
+          placeholder="Type your message..."
+          onChangeText={(msg) => setMsg(msg)}
+          style={globalStyles.messageText}
+        />
+        <SendButton title={"Send"} onPress={() => handleSendMsg(msg)} />
       </View>
     </View>
   );
 }
+

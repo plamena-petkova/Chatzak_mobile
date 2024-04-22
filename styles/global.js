@@ -1,10 +1,15 @@
-import { StyleSheet } from "react-native";
+import { Dimensions, StyleSheet, useWindowDimensions } from "react-native";
+
+
 
 export const globalStyles = StyleSheet.create({
   container: {
     flex: 1,
+    width: "100vw",
+    height: "95vh",
     backgroundColor: "#C7EBF9",
     padding: 20,
+   
   },
   text: {
     fontSize: 18,
@@ -60,7 +65,8 @@ export const globalStyles = StyleSheet.create({
   messageText:{
     fontSize: 16,
     color: "black",
-    paddingLeft:5
+    paddingLeft:5,
+    width:'100%'
   },
   sendBtn: {
     borderTopRightRadius: 4,
@@ -75,7 +81,6 @@ export const globalStyles = StyleSheet.create({
     borderColor: "#777",
     alignItems: "center",
     justifyContent: "space-between",
-    margin:5
   },
   input: {
     borderWidth: 1,
@@ -124,10 +129,8 @@ export const globalStyles = StyleSheet.create({
     borderRadius: 4,
   },
   inputContainer: {
-    position: "absolute",
-    width: "100vw",
-    height: "90vh",
-    justifyContent: "space-between",
+    flex:1,
+    justifyContent: "space-around",
     backgroundColor: "#C7EBF9",
   },
   messageChipFromMe: {
