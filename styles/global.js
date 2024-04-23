@@ -66,7 +66,7 @@ export const globalStyles = StyleSheet.create({
     fontSize: 16,
     color: "black",
     paddingLeft:5,
-    width:'100%'
+    width:'60%'
   },
   sendBtn: {
     borderTopRightRadius: 4,

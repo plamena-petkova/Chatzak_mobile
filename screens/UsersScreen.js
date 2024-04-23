@@ -17,7 +17,7 @@ import UserChatButton from "../components/UserChatButton";
 import { useNavigation } from "@react-navigation/native";
 import { setCurrentChat } from "../store/chatReducer";
 import { useDispatch, useSelector } from "react-redux";
-import { socket } from "../socket";
+
 
 export default function UsersScreen() {
   const dispatch = useDispatch();
@@ -53,17 +53,3 @@ export default function UsersScreen() {
   );
 }
 
-/*
-{allUsers.map(user => {
-        return <View key={user._id}><Text style={globalStyles.text}>{user?.username}</Text></View> 
-      })}
-      
-
-{allUsers && <FlatList
-        data={allUsers}
-        renderItem={({ user }) => (
-          <Text style={globalStyles.text}>{user?.username}</Text>
-        )}
-        keyExtractor={(user) => user._id}
-      />}
-*/

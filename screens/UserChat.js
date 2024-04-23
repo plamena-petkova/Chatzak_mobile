@@ -27,6 +27,13 @@ export default function UsersChat() {
   const [arrivalMsg, setArrivalMsg] = useState("");
 
   useEffect(() => {
+    if (currentUser._id && !socket.connected) {
+      socket.connect();
+    }
+  }, [currentUser, dispatch]);
+
+
+  useEffect(() => {
     if (socket) {
       socket.on("msg-receive", (data) => {
         setArrivalMsg({ fromSelf: false, message: data.message });
@@ -127,7 +134,7 @@ export default function UsersChat() {
           onChangeText={(msg) => setMsg(msg)}
           style={globalStyles.messageText}
         />
-        <SendButton title={"Send"} onPress={handleSendMsg(msg)} />
+        <SendButton title={"Send"} onPress={()=>handleSendMsg(msg)} />
       </View>
     </View>
   );
