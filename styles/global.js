@@ -3,20 +3,26 @@ import { Dimensions, StyleSheet, useWindowDimensions } from "react-native";
 
 
 export const globalStyles = StyleSheet.create({
-  container: {
-    flex: 1,
+ container: {
+    flexGrow: 1,
     width: "100vw",
-    height: "95vh",
+    height: "100vh",
     backgroundColor: "#C7EBF9",
     padding: 20,
    
+  },
+  containerScroll:{
+    flexGrow:1,
+    height:'200%',
+    backgroundColor: "#C7EBF9",
+    padding: 20,
   },
   text: {
     fontSize: 18,
     fontFamily: "RobotoRegular",
     marginBottom: 20,
     textAlign: "justify",
-    flex: 1,
+    //flex: 1,
   },
   logo: {
     width: "100%",
@@ -32,14 +38,10 @@ export const globalStyles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 10,
   },
-  imgContainer: {
-    display: "flex",
-    alignItems: "center",
-  },
   homePicture: {
-    width: 220,
-    height: 220,
-    objectFit: "cover",
+    width: "100%",
+    height: '50%',
+    flexGrow:1,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -51,7 +53,7 @@ export const globalStyles = StyleSheet.create({
     borderRadius: 4,
     elevation: 3,
     backgroundColor: "#2D5DA4",
-    marginBottom: 15,
+    //marginBottom: 15,
     marginTop: 15,
   },
   textBtn: {
@@ -110,13 +112,13 @@ export const globalStyles = StyleSheet.create({
     marginRight: 10,
   },
   avatarContainer: {
-    width: 100,
-    height: 100,
+    width: 50,
+    height: 50,
   },
   avatar: {
     width: "100%",
     height: "100%",
-    resizeMode: "stretch",
+    resizeMode: "cover",
   },
   chatScreenName: {
     flexDirection: "row",

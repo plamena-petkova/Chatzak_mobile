@@ -1,10 +1,4 @@
-import {
-  Image,
-  Text,
-  View,
-  TextInput,
-  FlatList,
-} from "react-native";
+import { Image, Text, View, TextInput, FlatList } from "react-native";
 import { globalStyles } from "../styles/global";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -31,7 +25,6 @@ export default function UsersChat() {
       socket.connect();
     }
   }, [currentUser, dispatch]);
-
 
   useEffect(() => {
     if (socket) {
@@ -71,7 +64,6 @@ export default function UsersChat() {
     msgs.push({ fromSelf: true, message: msg });
 
     setMsg(msgs);
-
   };
 
   useEffect(() => {
@@ -93,16 +85,13 @@ export default function UsersChat() {
   return (
     <View style={globalStyles.inputContainer}>
       <View style={globalStyles.chatScreenName}>
-        <Text style={globalStyles.textUserChatBtn}>{currentUser.username}</Text>
-        <View style={{ width: 30, height: 30 }} key={currentUser._id}>
+        <Text style={globalStyles.textUserChatBtn}>{currentChat.username}</Text>
+        <View style={globalStyles.avatarContainer}>
           <Image
-            style={{
-              width: "100%",
-              height: "100%",
-              resizeMode: "stretch",
-            }}
+            style={globalStyles.avatar}
             source={{
-              uri: currentUser.avatarImg,
+            //uri: currentChat.avatarImg,
+            uri:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVn6in6GE0ImUYiBEvM10G0QiIxEzWzVhfOAR7rsKmLw&s'
             }}
           />
         </View>
@@ -134,9 +123,8 @@ export default function UsersChat() {
           onChangeText={(msg) => setMsg(msg)}
           style={globalStyles.messageText}
         />
-        <SendButton title={"Send"} onPress={()=>handleSendMsg(msg)} />
+        <SendButton title={"Send"} onPress={() => handleSendMsg(msg)} />
       </View>
     </View>
   );
 }
-

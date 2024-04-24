@@ -1,6 +1,14 @@
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
-import { Button, StyleSheet, Text, View, Image, TextInput } from "react-native";
+import {
+  Button,
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TextInput,
+  ScrollView,
+} from "react-native";
 import { globalStyles } from "../styles/global";
 import CustomButton from "../components/CustomButton";
 
@@ -39,11 +47,6 @@ export default function RegisterScreen() {
         onChangeText={(value) => setPass(value)}
       />
       <CustomButton title="Register" />
-
-      <Text>
-        Username:{username} and Pass:{pass} and Names: {names} and enail:{" "}
-        {email}
-      </Text>
     </View>
   );
 }

@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
-import { Text, View, Image, TextInput } from "react-native";
+import { Text, View, Image, TextInput, ScrollView } from "react-native";
 import { globalStyles } from "../styles/global";
 import CustomButton from "../components/CustomButton";
 import { useNavigation } from "@react-navigation/native";
@@ -34,23 +34,25 @@ export default function LoginScreen() {
   };
 
   return (
-    <View style={globalStyles.container}>
-      <Image
-        style={globalStyles.logo}
-        source={require("../assets/chatzakLogo.png")}
-      />
-      <Text style={globalStyles.heading}>Login</Text>
-      <TextInput
-        placeholder="Username"
-        style={globalStyles.input}
-        onChangeText={(value) => setUsername(value)}
-      />
-      <TextInput
-        placeholder="Password"
-        style={globalStyles.input}
-        onChangeText={(value) => setPassword(value)}
-      />
-      <CustomButton title="Login" onPress={submitLoginHandler} />
-    </View>
+
+      <View style={globalStyles.container}>
+        <Image
+          style={globalStyles.logo}
+          source={require("../assets/chatzakLogo.png")}
+        />
+        <Text style={globalStyles.heading}>Login</Text>
+        <TextInput
+          placeholder="Username"
+          style={globalStyles.input}
+          onChangeText={(value) => setUsername(value)}
+        />
+        <TextInput
+          placeholder="Password"
+          style={globalStyles.input}
+          onChangeText={(value) => setPassword(value)}
+        />
+        <CustomButton title="Login" onPress={submitLoginHandler} />
+      </View>
+
   );
 }

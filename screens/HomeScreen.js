@@ -13,47 +13,43 @@ export default function HomeScreen() {
   const dispatch = useDispatch();
 
   return (
-    <View style={globalStyles.container}>
-      <ScrollView>
-        <Image
-          style={globalStyles.logo}
-          source={require("../assets/chatzakLogo.png")}
-        />
-        <Text style={globalStyles.heading}>Welcome to Chatzak</Text>
-        <Text style={globalStyles.text}>
-          Chatzak is a modern chat application designed to connect people with
-          ease. Whether you're looking to chat with friends, family, or
-          colleagues. Chatzak offers a seamless and user-friendly experience.
-        </Text>
-        {user.username ? (
-          <>
-            <Text style={globalStyles.text}>Welcome, {user?.username}</Text>
-            <CustomButton
-              title="Chats"
-              onPress={() => navigation.navigate("UsersScreen")}
-            />
-            <CustomButton title="Logout" onPress={() => dispatch(logout())} />
-          </>
-        ) : (
-          <>
-            <CustomButton
-              title="Login"
-              onPress={() => navigation.navigate("Login")}
-            />
-            <CustomButton
-              title="Sign Up"
-              onPress={() => navigation.navigate("Register")}
-            />
-          </>
-        )}
-
-        <View style={globalStyles.imgContainer}>
-          <Image
-            style={globalStyles.homePicture}
-            source={require("../assets/home.png")}
+    <ScrollView contentContainerStyle={globalStyles.containerScroll}>
+      <Image
+        style={globalStyles.logo}
+        source={require("../assets/chatzakLogo.png")}
+      />
+      <Text style={globalStyles.heading}>Welcome to Chatzak</Text>
+      <Text style={globalStyles.text}>
+        Chatzak is a modern chat application designed to connect people with
+        ease. Whether you're looking to chat with friends, family, or
+        colleagues. Chatzak offers a seamless and user-friendly experience.
+      </Text>
+      {user.username ? (
+        <>
+          <Text style={globalStyles.text}>Welcome, {user?.username}</Text>
+          <CustomButton
+            title="Chats"
+            onPress={() => navigation.navigate("UsersScreen")}
           />
-        </View>
-      </ScrollView>
-    </View>
+          <CustomButton title="Logout" onPress={() => dispatch(logout())} />
+        </>
+      ) : (
+        <>
+          <CustomButton
+            title="Login"
+            onPress={() => navigation.navigate("Login")}
+          />
+          <CustomButton
+            title="Sign Up"
+            onPress={() => navigation.navigate("Register")}
+          />
+        </>
+      )}
+      <Image
+        style={globalStyles.homePicture}
+        source={require("../assets/home.png")}
+        resizeMode="contain"
+      />
+    </ScrollView>
   );
 }
