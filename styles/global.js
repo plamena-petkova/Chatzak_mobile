@@ -1,28 +1,22 @@
-import { Dimensions, StyleSheet, useWindowDimensions } from "react-native";
-
-
+import { StyleSheet } from "react-native";
 
 export const globalStyles = StyleSheet.create({
- container: {
-    flexGrow: 1,
-    width: "100vw",
-    height: "100vh",
+  container: {
+    flex: 1,
     backgroundColor: "#C7EBF9",
     padding: 20,
-   
   },
-  containerScroll:{
-    flexGrow:1,
-    height:'200%',
+  containerScroll: {
+    flexGrow: 1,
     backgroundColor: "#C7EBF9",
     padding: 20,
+    justifyContent: "space-between",
   },
   text: {
     fontSize: 18,
     fontFamily: "RobotoRegular",
     marginBottom: 20,
     textAlign: "justify",
-    //flex: 1,
   },
   logo: {
     width: "100%",
@@ -40,8 +34,7 @@ export const globalStyles = StyleSheet.create({
   },
   homePicture: {
     width: "100%",
-    height: '50%',
-    flexGrow:1,
+    height: 386,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -53,7 +46,6 @@ export const globalStyles = StyleSheet.create({
     borderRadius: 4,
     elevation: 3,
     backgroundColor: "#2D5DA4",
-    //marginBottom: 15,
     marginTop: 15,
   },
   textBtn: {
@@ -62,22 +54,22 @@ export const globalStyles = StyleSheet.create({
     fontWeight: "bold",
     letterSpacing: 0.25,
     color: "white",
-    paddingLeft:5
+    paddingLeft: 5,
   },
-  messageText:{
+  messageText: {
     fontSize: 16,
     color: "black",
-    paddingLeft:5,
-    width:'60%'
+    paddingLeft: 5,
+    width: "60%",
   },
   sendBtn: {
     borderTopRightRadius: 4,
-    borderBottomRightRadius:4,
+    borderBottomRightRadius: 4,
     backgroundColor: "#2D5DA4",
-    padding:8,
+    padding: 8,
   },
-  inputMsg:{
-    flexDirection:'row',
+  inputMsg: {
+    flexDirection: "row",
     borderWidth: 1,
     borderRadius: 7,
     borderColor: "#777",
@@ -131,7 +123,7 @@ export const globalStyles = StyleSheet.create({
     borderRadius: 4,
   },
   inputContainer: {
-    flex:1,
+    flex: 1,
     justifyContent: "space-around",
     backgroundColor: "#C7EBF9",
   },
@@ -143,10 +135,9 @@ export const globalStyles = StyleSheet.create({
     padding: 8,
     margin: 10,
     backgroundColor: "#C3D5EA",
-    justifyContent:'flex-start',
-    marginLeft:75,
-    marginRight:20
-
+    justifyContent: "flex-start",
+    marginLeft: 75,
+    marginRight: 20,
   },
   messageChipForMe: {
     borderRadius: 13,
@@ -155,9 +146,9 @@ export const globalStyles = StyleSheet.create({
     padding: 8,
     margin: 10,
     backgroundColor: "#4B8CE7",
-    justifyContent:'flex-end',
-    marginRight:75,
-    marginLeft:20,
-    color:'white'
+    justifyContent: "flex-end",
+    marginRight: 75,
+    marginLeft: 20,
+    color: "white",
   },
 });

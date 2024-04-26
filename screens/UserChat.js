@@ -60,10 +60,7 @@ export default function UsersChat() {
       message: msg,
     });
 
-    const msgs = [...msg];
-    msgs.push({ fromSelf: true, message: msg });
-
-    setMsg(msgs);
+    setMsg('');
   };
 
   useEffect(() => {
@@ -81,6 +78,7 @@ export default function UsersChat() {
   useEffect(() => {
     arrivalMsg && setMsg((prev) => [...prev, arrivalMsg]);
   }, [arrivalMsg]);
+
 
   return (
     <View style={globalStyles.inputContainer}>
@@ -122,6 +120,7 @@ export default function UsersChat() {
           placeholder="Type your message..."
           onChangeText={(msg) => setMsg(msg)}
           style={globalStyles.messageText}
+          value={msg || ''}
         />
         <SendButton title={"Send"} onPress={() => handleSendMsg(msg)} />
       </View>
