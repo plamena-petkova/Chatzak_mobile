@@ -8,6 +8,7 @@ import { socket } from "../socket";
 import axios from "axios";
 import { sendMessageRoute } from "../utils/apiRoutes";
 import { setOnlineUsers } from "../store/authReducer";
+import { SvgUri, SvgXml } from "react-native-svg";
 
 export default function UsersChat() {
   const dispatch = useDispatch();
@@ -60,7 +61,7 @@ export default function UsersChat() {
       message: msg,
     });
 
-    setMsg('');
+    setMsg("");
   };
 
   useEffect(() => {
@@ -79,19 +80,13 @@ export default function UsersChat() {
     arrivalMsg && setMsg((prev) => [...prev, arrivalMsg]);
   }, [arrivalMsg]);
 
-
   return (
     <View style={globalStyles.inputContainer}>
       <View style={globalStyles.chatScreenName}>
         <Text style={globalStyles.textUserChatBtn}>{currentChat.username}</Text>
         <View style={globalStyles.avatarContainer}>
-          <Image
-            style={globalStyles.avatar}
-            source={{
-            //uri: currentChat.avatarImg,
-            uri:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVn6in6GE0ImUYiBEvM10G0QiIxEzWzVhfOAR7rsKmLw&s'
-            }}
-          />
+        <SvgUri
+      uri={currentChat.avatarImg} />
         </View>
       </View>
       <FlatList
@@ -120,7 +115,7 @@ export default function UsersChat() {
           placeholder="Type your message..."
           onChangeText={(msg) => setMsg(msg)}
           style={globalStyles.messageText}
-          value={msg || ''}
+          value={msg || ""}
         />
         <SendButton title={"Send"} onPress={() => handleSendMsg(msg)} />
       </View>

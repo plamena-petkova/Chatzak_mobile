@@ -15,7 +15,7 @@ const initialState = {
   contacts: [],
   isLoading: false,
   error: null,
-  avatarUrl: "",
+  avatarUrl: {},
   onlineUsers:{},
 };
 
@@ -89,7 +89,8 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     setAvatar: (state, action) => {
-      state.avatarUrl = action.payload;
+      state.avatarUrl= action.payload;
+  
     },
     setOnlineUsers: (state, action) => {
       state.onlineUsers = action.payload;

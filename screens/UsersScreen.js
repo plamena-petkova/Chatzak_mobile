@@ -18,21 +18,19 @@ import { useNavigation } from "@react-navigation/native";
 import { setCurrentChat } from "../store/chatReducer";
 import { useDispatch, useSelector } from "react-redux";
 
-
 export default function UsersScreen() {
   const dispatch = useDispatch();
 
   const allUsers = useSelector((state) => state.auth.allUsers);
-  const currentUser = useSelector((state) => state.auth.user);
+  const avatar = useSelector((state) => state.auth.avatarUrl.avatar);
 
   const navigation = useNavigation();
-
 
   const handleUserChat = (user) => {
     dispatch(setCurrentChat(user));
     navigation.navigate("UserChat");
-
   };
+
 
   return (
     <ScrollView>
@@ -52,4 +50,3 @@ export default function UsersScreen() {
     </ScrollView>
   );
 }
-

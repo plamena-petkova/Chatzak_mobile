@@ -4,13 +4,30 @@ import { globalStyles } from "../styles/global";
 import CustomButton from "../components/CustomButton";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../store/authReducer";
+import { logout, setAvatar } from "../store/authReducer";
+import { createAvatar } from "@dicebear/core";
+import { bottts } from "@dicebear/collection";
 
 export default function HomeScreen() {
   const navigation = useNavigation();
 
   const user = useSelector((state) => state.auth.user);
+  const allUsers = useSelector((state) => state.auth.allUsers);
   const dispatch = useDispatch();
+
+
+  allUsers.forEach((user) => {
+    const avatar = createAvatar(bottts, {
+      seed: user.names,
+    }).toString();
+    
+    const dataAvatar = {
+      avatar, 
+      userId:user._id
+    }
+    dispatch(setAvatar(dataAvatar));
+  });
+
 
   return (
     <View style={{ flex: 1 }}>
