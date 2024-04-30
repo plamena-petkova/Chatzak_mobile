@@ -1,4 +1,4 @@
-import { Image, Text, View, TextInput, FlatList } from "react-native";
+import { Text, View, TextInput, FlatList } from "react-native";
 import { globalStyles } from "../styles/global";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -8,7 +8,7 @@ import { socket } from "../socket";
 import axios from "axios";
 import { sendMessageRoute } from "../utils/apiRoutes";
 import { setOnlineUsers } from "../store/authReducer";
-import { SvgUri, SvgXml } from "react-native-svg";
+import { SvgUri } from "react-native-svg";
 
 export default function UsersChat() {
   const dispatch = useDispatch();
@@ -115,7 +115,8 @@ export default function UsersChat() {
           placeholder="Type your message..."
           onChangeText={(msg) => setMsg(msg)}
           style={globalStyles.messageText}
-          value={msg || ""}
+          value={msg || ''}
+          onChange={() => setMsg('')}
         />
         <SendButton title={"Send"} onPress={() => handleSendMsg(msg)} />
       </View>

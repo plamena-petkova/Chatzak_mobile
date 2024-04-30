@@ -17,7 +17,3 @@ export default function UserChatButton(props) {
     </Pressable>
   );
 }
-
-/*
-<SvgXml xml={currentAvatar} />
-*/
