@@ -3,7 +3,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "../Chatzak_mobile/screens/HomeScreen";
 import LoginScreen from "./screens/LoginScreen";
-//import * as SplashScreen from "expo-splash-screen";
 import * as Font from "expo-font";
 import { useEffect, useState } from "react";
 import RegisterScreen from "./screens/RegisterScreen";
@@ -12,9 +11,7 @@ import UsersChat from "./screens/UserChat";
 import { Provider } from "react-redux";
 import { store, persistor } from "../Chatzak_mobile/store/store";
 import { PersistGate } from "redux-persist/lib/integration/react";
-//import { PersistGate } from "redux-persist/es/integration/react";
 
-//SplashScreen.preventAutoHideAsync();
 
 const Stack = createNativeStackNavigator();
 

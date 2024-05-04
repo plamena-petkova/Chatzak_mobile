@@ -1,4 +1,4 @@
-import { Text, View, TextInput, FlatList } from "react-native";
+import { Text, View, TextInput, FlatList, Pressable } from "react-native";
 import { globalStyles } from "../styles/global";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -9,13 +9,28 @@ import axios from "axios";
 import { sendMessageRoute } from "../utils/apiRoutes";
 import { setOnlineUsers } from "../store/authReducer";
 import { SvgUri } from "react-native-svg";
+import EmojiPicker from "rn-emoji-keyboard";
+import CustomButton from "../components/CustomButton";
+import Icon from 'react-native-vector-icons/FontAwesome';
+import IconEntypo from 'react-native-vector-icons/Entypo';
+import EmojiButton from "../components/EmojiButton";
 
 export default function UsersChat() {
   const dispatch = useDispatch();
 
+  const [isOpenEmojiPicker, setIsOpenEmojiPicker] = useState(false);
+  const [emoji, setEmoji] = useState({});
+
+  const handlePick = (emojiObject) => {
+    setEmoji(emojiObject.emoji);
+    setMsg(emoji);
+  };
+
   const currentChat = useSelector((state) => state.chat.currentChat);
   const currentUser = useSelector((state) => state.auth.user);
   const messages = useSelector((state) => state.chat.messages);
+
+  const emojiIcon = <IconEntypo name="emoji-happy" size={18} color="white" />;
 
   const [msg, setMsg] = useState("");
 
@@ -85,8 +100,7 @@ export default function UsersChat() {
       <View style={globalStyles.chatScreenName}>
         <Text style={globalStyles.textUserChatBtn}>{currentChat.username}</Text>
         <View style={globalStyles.avatarContainer}>
-        <SvgUri
-      uri={currentChat.avatarImg} />
+          <SvgUri uri={currentChat.avatarImg} />
         </View>
       </View>
       <FlatList
@@ -109,14 +123,22 @@ export default function UsersChat() {
         }}
         keyExtractor={(message) => message.id}
       />
-
       <View style={globalStyles.inputMsg}>
+        <EmojiButton
+          title={emojiIcon}
+          onPress={() => setIsOpenEmojiPicker(true)}
+        />
         <TextInput
           placeholder="Type your message..."
           onChangeText={(msg) => setMsg(msg)}
           style={globalStyles.messageText}
-          value={msg || ''}
-          onChange={() => setMsg('')}
+          value={msg || ""}
+          onChange={() => setMsg("")}
+        />
+        <EmojiPicker
+          onEmojiSelected={handlePick}
+          open={isOpenEmojiPicker}
+          onClose={() => setIsOpenEmojiPicker(false)}
         />
         <SendButton title={"Send"} onPress={() => handleSendMsg(msg)} />
       </View>
