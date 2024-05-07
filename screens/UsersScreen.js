@@ -27,9 +27,9 @@ export default function UsersScreen() {
 
   const handleUserChat = (user) => {
     dispatch(setCurrentChat(user));
-    navigation.navigate("UserChat");
+    navigation.navigate("UserChat", {chat:user.username});
   };
-
+ 
 
   return (
     <ScrollView>

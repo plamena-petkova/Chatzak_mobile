@@ -8,23 +8,24 @@ import { socket } from "../socket";
 import axios from "axios";
 import { sendMessageRoute } from "../utils/apiRoutes";
 import { setOnlineUsers } from "../store/authReducer";
-import { SvgUri } from "react-native-svg";
 import EmojiPicker from "rn-emoji-keyboard";
-import CustomButton from "../components/CustomButton";
-import Icon from 'react-native-vector-icons/FontAwesome';
-import IconEntypo from 'react-native-vector-icons/Entypo';
+import IconEntypo from "react-native-vector-icons/Entypo";
 import EmojiButton from "../components/EmojiButton";
-import { useNavigation } from "@react-navigation/native";
 
 export default function UsersChat() {
   const dispatch = useDispatch();
 
   const [isOpenEmojiPicker, setIsOpenEmojiPicker] = useState(false);
-  const [emoji, setEmoji] = useState({});
+
 
   const handlePick = (emojiObject) => {
-    setEmoji(emojiObject.emoji);
-    setMsg(emoji);
+    let message = msg;
+    if(message === undefined) {
+      message = emojiObject.emoji;
+    } else {
+      message += emojiObject.emoji;
+    }
+    setMsg(message);
   };
 
   const currentChat = useSelector((state) => state.chat.currentChat);
@@ -33,7 +34,7 @@ export default function UsersChat() {
 
   const emojiIcon = <IconEntypo name="emoji-happy" size={18} color="white" />;
 
-  const [msg, setMsg] = useState("");
+  const [msg, setMsg] = useState();
 
   const [arrivalMsg, setArrivalMsg] = useState("");
 
@@ -98,12 +99,6 @@ export default function UsersChat() {
 
   return (
     <View style={globalStyles.inputContainer}>
-      <View style={globalStyles.chatScreenName}>
-        <Text style={globalStyles.textUserChatBtn}>{currentChat.username}</Text>
-        <View style={globalStyles.avatarContainer}>
-          <SvgUri uri={currentChat.avatarImg} />
-        </View>
-      </View>
       <FlatList
         inverted
         data={[...messages].reverse()}
@@ -146,3 +141,12 @@ export default function UsersChat() {
     </View>
   );
 }
+
+/*
+      <View style={globalStyles.chatScreenName}>
+        <Text style={globalStyles.textUserChatBtn}>{currentChat.username}</Text>
+        <View style={globalStyles.avatarContainer}>
+          <SvgUri uri={currentChat.avatarImg} />
+        </View>
+      </View>
+      */

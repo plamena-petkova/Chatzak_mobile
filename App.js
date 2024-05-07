@@ -46,7 +46,7 @@ export default function App() {
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Register" component={RegisterScreen} />
             <Stack.Screen name="UsersScreen" component={UsersScreen} />
-            <Stack.Screen name="UserChat" component={UsersChat} />
+            <Stack.Screen name="UserChat" component={UsersChat}  options={({ route }) => ({ title: route.params.chat })} />
           </Stack.Navigator>
         </NavigationContainer>
       </PersistGate>
