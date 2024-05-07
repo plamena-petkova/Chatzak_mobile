@@ -22,7 +22,6 @@ export default function UsersScreen() {
   const dispatch = useDispatch();
 
   const allUsers = useSelector((state) => state.auth.allUsers);
-  const avatar = useSelector((state) => state.auth.avatarUrl.avatar);
 
   const navigation = useNavigation();
 

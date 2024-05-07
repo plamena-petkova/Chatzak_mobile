@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "../Chatzak_mobile/screens/HomeScreen";
@@ -11,7 +10,6 @@ import UsersChat from "./screens/UserChat";
 import { Provider } from "react-redux";
 import { store, persistor } from "../Chatzak_mobile/store/store";
 import { PersistGate } from "redux-persist/lib/integration/react";
-
 
 const Stack = createNativeStackNavigator();
 

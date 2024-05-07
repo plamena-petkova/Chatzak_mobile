@@ -14,6 +14,7 @@ import CustomButton from "../components/CustomButton";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import IconEntypo from 'react-native-vector-icons/Entypo';
 import EmojiButton from "../components/EmojiButton";
+import { useNavigation } from "@react-navigation/native";
 
 export default function UsersChat() {
   const dispatch = useDispatch();
@@ -132,7 +133,7 @@ export default function UsersChat() {
           placeholder="Type your message..."
           onChangeText={(msg) => setMsg(msg)}
           style={globalStyles.messageText}
-          value={msg || ""}
+          value={msg}
           onChange={() => setMsg("")}
         />
         <EmojiPicker
