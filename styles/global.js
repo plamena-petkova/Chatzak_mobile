@@ -59,7 +59,7 @@ export const globalStyles = StyleSheet.create({
   messageText: {
     fontSize: 16,
     color: "black",
-    width: "70%",
+    width: "55%",
   },
   sendBtn: {
     borderTopRightRadius: 4,
@@ -79,7 +79,7 @@ export const globalStyles = StyleSheet.create({
   emojiBtn: {
     borderBottomLeftRadius: 5,
     borderTopLeftRadius: 5,
-    backgroundColor: "#2D5DA4",
+    //backgroundColor: "#2D5DA4",
     padding: 8,
     paddingRight: 12,
     justifyContent: "center",
@@ -132,7 +132,6 @@ export const globalStyles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
     padding: 7,
-    //backgroundColor: "#DDE7EE",
     marginBottom: 7,
     border: 1,
     borderRadius: 4,

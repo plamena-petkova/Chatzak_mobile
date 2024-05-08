@@ -1,4 +1,4 @@
-import { Text, View, TextInput, FlatList, Pressable } from "react-native";
+import { Text, View, TextInput, FlatList, Image } from "react-native";
 import { globalStyles } from "../styles/global";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -10,17 +10,29 @@ import { sendMessageRoute } from "../utils/apiRoutes";
 import { setOnlineUsers } from "../store/authReducer";
 import EmojiPicker from "rn-emoji-keyboard";
 import IconEntypo from "react-native-vector-icons/Entypo";
+import IconAnt from "react-native-vector-icons/AntDesign";
 import EmojiButton from "../components/EmojiButton";
+import PictureButton from "../components/PictureButton";
+import * as ImagePicker from "expo-image-picker";
 
 export default function UsersChat() {
   const dispatch = useDispatch();
 
+  const [msg, setMsg] = useState();
+  const [arrivalMsg, setArrivalMsg] = useState("");
   const [isOpenEmojiPicker, setIsOpenEmojiPicker] = useState(false);
+  const [image, setImage] = useState(null);
 
+  const currentChat = useSelector((state) => state.chat.currentChat);
+  const currentUser = useSelector((state) => state.auth.user);
+  const messages = useSelector((state) => state.chat.messages);
+
+  const emojiIcon = <IconEntypo name="emoji-happy" size={18} color="#2D5DA4" />;
+  const pictureIcon = <IconAnt name="picture" size={18} color="#2D5DA4" />;
 
   const handlePick = (emojiObject) => {
     let message = msg;
-    if(message === undefined) {
+    if (message === undefined) {
       message = emojiObject.emoji;
     } else {
       message += emojiObject.emoji;
@@ -28,15 +40,41 @@ export default function UsersChat() {
     setMsg(message);
   };
 
-  const currentChat = useSelector((state) => state.chat.currentChat);
-  const currentUser = useSelector((state) => state.auth.user);
-  const messages = useSelector((state) => state.chat.messages);
+  const handleSendMsg = async (msg) => {
+    await axios.post(sendMessageRoute, {
+      from: currentUser?._id,
+      to: currentChat?._id,
+      message: msg,
+    });
 
-  const emojiIcon = <IconEntypo name="emoji-happy" size={18} color="white" />;
+    socket.emit("send-msg", {
+      to: currentChat._id,
+      from: currentUser._id,
+      message: msg,
+    });
 
-  const [msg, setMsg] = useState();
+    setMsg("");
+  };
 
-  const [arrivalMsg, setArrivalMsg] = useState("");
+  const selectImage = async () => {
+    try {
+      // No permissions request is necessary for launching the image library
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
+
+      console.log(result.assets[0].uri);
+
+      if (!result.canceled) {
+        setImage(result.assets[0].uri);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   useEffect(() => {
     if (currentUser._id && !socket.connected) {
@@ -64,22 +102,6 @@ export default function UsersChat() {
       socket.disconnect();
     };
   }, []);
-
-  const handleSendMsg = async (msg) => {
-    await axios.post(sendMessageRoute, {
-      from: currentUser?._id,
-      to: currentChat?._id,
-      message: msg,
-    });
-
-    socket.emit("send-msg", {
-      to: currentChat._id,
-      from: currentUser._id,
-      message: msg,
-    });
-
-    setMsg("");
-  };
 
   useEffect(() => {
     if (currentChat) {
@@ -136,6 +158,10 @@ export default function UsersChat() {
           open={isOpenEmojiPicker}
           onClose={() => setIsOpenEmojiPicker(false)}
         />
+        <PictureButton title={pictureIcon} onPress={selectImage} />
+        {image && (
+          <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
+        )}
         <SendButton title={"Send"} onPress={() => handleSendMsg(msg)} />
       </View>
     </View>
