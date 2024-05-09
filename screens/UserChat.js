@@ -1,4 +1,4 @@
-import { Text, View, TextInput, FlatList, Image } from "react-native";
+import { Text, View, TextInput, FlatList, Image, Alert } from "react-native";
 import { globalStyles } from "../styles/global";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -14,6 +14,10 @@ import IconAnt from "react-native-vector-icons/AntDesign";
 import EmojiButton from "../components/EmojiButton";
 import PictureButton from "../components/PictureButton";
 import * as ImagePicker from "expo-image-picker";
+import { firebase } from "../config";
+import * as FileSystem from "expo-file-system";
+import { getDownloadURL, getStorage, ref } from "firebase/storage";
+import { SvgUri } from "react-native-svg";
 
 export default function UsersChat() {
   const dispatch = useDispatch();
@@ -22,6 +26,7 @@ export default function UsersChat() {
   const [arrivalMsg, setArrivalMsg] = useState("");
   const [isOpenEmojiPicker, setIsOpenEmojiPicker] = useState(false);
   const [image, setImage] = useState(null);
+  const [uploading, setUploading] = useState(false);
 
   const currentChat = useSelector((state) => state.chat.currentChat);
   const currentUser = useSelector((state) => state.auth.user);
@@ -76,6 +81,44 @@ export default function UsersChat() {
     }
   };
 
+  const uploadImage = async () => {
+    setUploading(true);
+
+    try {
+      const { uri } = await FileSystem.getInfoAsync(image);
+      const blob = await new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.onload = () => {
+          resolve(xhr.response);
+        };
+        xhr.onerror = (e) => {
+          reject(new TypeError("Network request failed"));
+        };
+        xhr.responseType = "blob";
+        xhr.open("GET", uri, true);
+        xhr.send(null);
+      });
+
+      const filename = image.substring(image.lastIndexOf("/") + 1);
+      const refer = firebase.storage().ref().child(filename);
+
+      await refer.put(blob);
+
+      const firebaseStorage = getStorage();
+      const reference = ref(firebaseStorage, refer);
+      await getDownloadURL(reference).then((url) => {
+        setMsg(url);
+      });
+
+      setUploading(false);
+      Alert.alert("Photo uploaded!");
+      setImage(null);
+    } catch (e) {
+      console.error(e);
+      setUploading(false);
+    }
+  };
+
   useEffect(() => {
     if (currentUser._id && !socket.connected) {
       socket.connect();
@@ -125,6 +168,23 @@ export default function UsersChat() {
         inverted
         data={[...messages].reverse()}
         renderItem={(msg) => {
+          if (msg.item.message.startsWith("https://")) {
+            return (
+              <View key={msg.item.id}>
+                <Image
+                  source={{ uri: msg.item.message }}
+                  resizeMode="contain"
+                  style={{
+                    width: 200,
+                    height: 200,
+                  }}
+                />
+              </View>
+            );
+          }
+
+          //console.log("MSG", msg.item.message.startsWith("https://"));
+
           return (
             <View key={msg.item.id}>
               <Text
@@ -141,6 +201,15 @@ export default function UsersChat() {
         }}
         keyExtractor={(message) => message.id}
       />
+      {image && (
+        <View>
+          <Image
+            source={{ uri: image }}
+            style={{ width: 200, height: 200, justifyContent: "center" }}
+          />
+          <SendButton title="Send image" onPress={uploadImage} />
+        </View>
+      )}
       <View style={globalStyles.inputMsg}>
         <EmojiButton
           title={emojiIcon}
@@ -159,9 +228,7 @@ export default function UsersChat() {
           onClose={() => setIsOpenEmojiPicker(false)}
         />
         <PictureButton title={pictureIcon} onPress={selectImage} />
-        {image && (
-          <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
-        )}
+
         <SendButton title={"Send"} onPress={() => handleSendMsg(msg)} />
       </View>
     </View>
