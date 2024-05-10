@@ -14,7 +14,7 @@ import IconAnt from "react-native-vector-icons/AntDesign";
 import EmojiButton from "../components/EmojiButton";
 import PictureButton from "../components/PictureButton";
 import * as ImagePicker from "expo-image-picker";
-import { firebase } from "../config";
+import { firebase, storage } from "../config";
 import * as FileSystem from "expo-file-system";
 import { getDownloadURL, getStorage, ref } from "firebase/storage";
 import { SvgUri } from "react-native-svg";
@@ -101,6 +101,7 @@ export default function UsersChat() {
 
       const filename = image.substring(image.lastIndexOf("/") + 1);
       const refer = firebase.storage().ref().child(filename);
+      //const refer = ref(storage, filename);
 
       await refer.put(blob);
 

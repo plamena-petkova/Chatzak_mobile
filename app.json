@@ -31,6 +31,10 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "env": {
+      "production": ".env",
+      "development": ".env"
     }
   }
 }
