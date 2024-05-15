@@ -161,20 +161,7 @@ export default function UsersChat() {
         inverted
         data={[...messages].reverse()}
         renderItem={(msg) => {
-          if (msg.item.message.startsWith("https://")) {
-            return (
-              <View key={msg.item.id}>
-                <Image
-                  source={{ uri: msg.item.message }}
-                  resizeMode="contain"
-                  style={{
-                    width: 200,
-                    height: 200,
-                  }}
-                />
-              </View>
-            );
-          }
+
 
           return (
             <View key={msg.item.id}>
@@ -229,3 +216,19 @@ export default function UsersChat() {
 
 //<PictureButton title={pictureIcon} onPress={selectImage} />
 
+/*
+          if (msg.item.message.startsWith("https://")) {
+            return (
+              <View key={msg.item.id}>
+                <Image
+                  source={{ uri: msg.item.message }}
+                  resizeMode="contain"
+                  style={{
+                    width: 200,
+                    height: 200,
+                  }}
+                />
+              </View>
+            );
+          }
+*/

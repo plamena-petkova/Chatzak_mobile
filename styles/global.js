@@ -76,7 +76,18 @@ export const globalStyles = StyleSheet.create({
     backgroundColor: "#C7EBF9",
     margin: 10,
   },
-  avatarProfile:{
+  userProfileAvatar: {
+    width: "100%",
+    height: "30%",
+    alignItems: "center",
+    marginBottom: 40,
+  },
+  userProfileTextContainer:{
+    flexDirection: "row",
+    padding: 10,
+    justifyContent: "space-between",
+  },
+  avatarProfile: {
     width: 120,
     height: 120,
     borderColor: "black",
@@ -161,7 +172,7 @@ export const globalStyles = StyleSheet.create({
     justifyContent: "flex-start",
     marginLeft: 75,
     marginRight: 20,
-    maxWidth:'max-content'
+    maxWidth: "max-content",
   },
   messageChipForMe: {
     borderRadius: 13,
@@ -174,6 +185,6 @@ export const globalStyles = StyleSheet.create({
     marginRight: 75,
     marginLeft: 20,
     color: "white",
-    maxWidth:'max-content'
+    maxWidth: "max-content",
   },
 });
