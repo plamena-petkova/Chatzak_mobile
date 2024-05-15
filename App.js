@@ -10,6 +10,7 @@ import UsersChat from "./screens/UserChat";
 import { Provider } from "react-redux";
 import { store, persistor } from "../Chatzak_mobile/store/store";
 import { PersistGate } from "redux-persist/lib/integration/react";
+import UserProfile from "./screens/UserProfile";
 
 const Stack = createNativeStackNavigator();
 
@@ -47,6 +48,7 @@ export default function App() {
             <Stack.Screen name="Register" component={RegisterScreen} />
             <Stack.Screen name="UsersScreen" component={UsersScreen} />
             <Stack.Screen name="UserChat" component={UsersChat}  options={({ route }) => ({ title: route.params.chat })} />
+            <Stack.Screen name="UserProfile" component={UserProfile} />
           </Stack.Navigator>
         </NavigationContainer>
       </PersistGate>

@@ -15,7 +15,7 @@ import { globalStyles } from "../styles/global";
 
 import UserChatButton from "../components/UserChatButton";
 import { useNavigation } from "@react-navigation/native";
-import { setCurrentChat } from "../store/chatReducer";
+import { getAllMessages, setCurrentChat } from "../store/chatReducer";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function UsersScreen() {
@@ -29,7 +29,6 @@ export default function UsersScreen() {
     dispatch(setCurrentChat(user));
     navigation.navigate("UserChat", {chat:user.username});
   };
- 
 
   return (
     <ScrollView>

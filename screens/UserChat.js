@@ -11,13 +11,11 @@ import { setOnlineUsers } from "../store/authReducer";
 import EmojiPicker from "rn-emoji-keyboard";
 import IconEntypo from "react-native-vector-icons/Entypo";
 import IconAnt from "react-native-vector-icons/AntDesign";
-import EmojiButton from "../components/EmojiButton";
-import PictureButton from "../components/PictureButton";
 import * as ImagePicker from "expo-image-picker";
 import { firebase, storage } from "../config";
 import * as FileSystem from "expo-file-system";
 import { getDownloadURL, getStorage, ref } from "firebase/storage";
-import { SvgUri } from "react-native-svg";
+import IconButton from "../components/IconButton";
 
 export default function UsersChat() {
   const dispatch = useDispatch();
@@ -26,7 +24,6 @@ export default function UsersChat() {
   const [arrivalMsg, setArrivalMsg] = useState("");
   const [isOpenEmojiPicker, setIsOpenEmojiPicker] = useState(false);
   const [image, setImage] = useState(null);
-  const [uploading, setUploading] = useState(false);
 
   const currentChat = useSelector((state) => state.chat.currentChat);
   const currentUser = useSelector((state) => state.auth.user);
@@ -101,7 +98,6 @@ export default function UsersChat() {
 
       const filename = image.substring(image.lastIndexOf("/") + 1);
       const refer = firebase.storage().ref().child(filename);
-      //const refer = ref(storage, filename);
 
       await refer.put(blob);
 
@@ -110,13 +106,9 @@ export default function UsersChat() {
       await getDownloadURL(reference).then((url) => {
         setMsg(url);
       });
-
-      setUploading(false);
-      Alert.alert("Photo uploaded!");
       setImage(null);
     } catch (e) {
       console.error(e);
-      setUploading(false);
     }
   };
 
@@ -184,8 +176,6 @@ export default function UsersChat() {
             );
           }
 
-          //console.log("MSG", msg.item.message.startsWith("https://"));
-
           return (
             <View key={msg.item.id}>
               <Text
@@ -212,7 +202,7 @@ export default function UsersChat() {
         </View>
       )}
       <View style={globalStyles.inputMsg}>
-        <EmojiButton
+        <IconButton
           title={emojiIcon}
           onPress={() => setIsOpenEmojiPicker(true)}
         />
@@ -228,7 +218,7 @@ export default function UsersChat() {
           open={isOpenEmojiPicker}
           onClose={() => setIsOpenEmojiPicker(false)}
         />
-        <PictureButton title={pictureIcon} onPress={selectImage} />
+        
 
         <SendButton title={"Send"} onPress={() => handleSendMsg(msg)} />
       </View>
@@ -236,11 +226,6 @@ export default function UsersChat() {
   );
 }
 
-/*
-      <View style={globalStyles.chatScreenName}>
-        <Text style={globalStyles.textUserChatBtn}>{currentChat.username}</Text>
-        <View style={globalStyles.avatarContainer}>
-          <SvgUri uri={currentChat.avatarImg} />
-        </View>
-      </View>
-      */
+
+//<PictureButton title={pictureIcon} onPress={selectImage} />
+

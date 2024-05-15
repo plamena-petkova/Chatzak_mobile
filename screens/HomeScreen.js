@@ -35,6 +35,10 @@ export default function HomeScreen() {
               onPress={() => navigation.navigate("UsersScreen")}
             />
             <CustomButton title="Logout" onPress={() => dispatch(logout())} />
+            <CustomButton
+              title="Settings"
+              onPress={() => navigation.navigate("UserProfile")}
+            />
           </>
         ) : (
           <>

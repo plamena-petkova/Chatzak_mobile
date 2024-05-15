@@ -1,7 +1,7 @@
 import { Button, Text, Pressable } from "react-native";
 import { globalStyles } from "../styles/global";
 
-export default function EmojiButton(props) {
+export default function IconButton(props) {
   const { onPress, title } = props;
 
   return (
