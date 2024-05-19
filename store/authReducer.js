@@ -2,12 +2,14 @@ import { createSlice, createAsyncThunk, current } from "@reduxjs/toolkit";
 import {
   allUsersRoute,
   createAvatarRoute,
+  editUserByIdRoute,
   getUserByIdRoute,
   loginRoute,
   registerRoute,
   updateAvatarRoute,
 } from "../utils/apiRoutes";
 import axios from "axios";
+import { Alert } from "react-native";
 
 const initialState = {
   user: {},
@@ -16,18 +18,17 @@ const initialState = {
   isLoading: false,
   error: null,
   avatarUrl: {},
-  onlineUsers:{},
+  onlineUsers: {},
 };
 
-export const login = createAsyncThunk("user/login", async (data, thunkAPI) => {
+export const login = createAsyncThunk("user/login", async (data) => {
   const { username, password } = data;
+
   const response = await axios.post(loginRoute, {
     username,
     password,
   });
-
   return response.data.user;
- 
 });
 
 export const register = createAsyncThunk("user/register", async (data) => {
@@ -48,26 +49,24 @@ export const fetchUsers = createAsyncThunk("users/fetch", async () => {
   return response.data.users;
 });
 
-export const createAvatar = createAsyncThunk("user/create-avatar", async ({currentUser}) => {
+export const createAvatar = createAsyncThunk(
+  "user/create-avatar",
+  async ({ currentUser }) => {
+    const userId = currentUser._id;
 
-    
-  const userId = currentUser._id;
- 
-  const avatar = `${createAvatarRoute}${currentUser.username}`;
+    const avatar = `${createAvatarRoute}${currentUser.username}`;
 
-  const newData = { userId, avatar };
+    const newData = { userId, avatar };
 
-  const response = await axios.put(`${updateAvatarRoute}${userId}`, newData);
+    const response = await axios.put(`${updateAvatarRoute}${userId}`, newData);
 
-  return response.data.user;
+    return response.data.user;
   }
-
 );
 
 export const updateUsersAvatar = createAsyncThunk(
   "user/update-avatar",
-  async ({currentUser, randomNumber}) => {
-
+  async ({ currentUser, randomNumber }) => {
     const userId = currentUser._id;
     const avatar = `${createAvatarRoute}${randomNumber}`;
 
@@ -84,13 +83,21 @@ export const getUserById = createAsyncThunk("user/get-user", async (userId) => {
   return response.data.user;
 });
 
+export const editUserById = createAsyncThunk("user/edit-user", async (data) => {
+  const userId = data.currentUser._id;
+  const newData = data.updatedUsername;
+
+  const response = await axios.put(`${editUserByIdRoute}${userId}`, newData);
+
+  return response.data.user;
+});
+
 export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
     setAvatar: (state, action) => {
-      state.avatarUrl= action.payload;
-  
+      state.avatarUrl = action.payload;
     },
     setOnlineUsers: (state, action) => {
       state.onlineUsers = action.payload;
@@ -143,7 +150,6 @@ export const authSlice = createSlice({
       state.error = action.error;
     });
 
-  
     builder.addCase(createAvatar.pending, (state, action) => {
       state.isLoading = true;
     });
@@ -155,7 +161,7 @@ export const authSlice = createSlice({
       state.isLoading = false;
       state.error = action.error;
     });
-    
+
     builder.addCase(updateUsersAvatar.pending, (state, action) => {
       state.isLoading = true;
     });
@@ -178,9 +184,21 @@ export const authSlice = createSlice({
       state.isLoading = false;
       state.error = action.error;
     });
+    builder.addCase(editUserById.pending, (state, action) => {
+      state.isLoading = true;
+    });
+    builder.addCase(editUserById.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.user = action.payload;
+    });
+    builder.addCase(editUserById.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.error;
+    });
   },
 });
 
-export const { logout, setAvatar, setContacts, setErrorClear, setOnlineUsers } = authSlice.actions;
+export const { logout, setAvatar, setContacts, setErrorClear, setOnlineUsers } =
+  authSlice.actions;
 
 export default authSlice.reducer;

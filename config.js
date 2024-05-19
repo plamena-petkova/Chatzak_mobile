@@ -20,7 +20,6 @@ const firebaseConfig = {
   measurementId: process.env.EXPO_PUBLIC_MEASUREMENT_ID,
 };
 
-console.log('Storage bucket', process.env.EXPO_PUBLIC_API_KEY)
 
  //Initialize Firebase
 

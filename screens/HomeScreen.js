@@ -27,7 +27,7 @@ export default function HomeScreen() {
           ease. Whether you're looking to chat with friends, family, or
           colleagues. Chatzak offers a seamless and user-friendly experience.
         </Text>
-        {user.username ? (
+        {user?.username ? (
           <>
             <Text style={globalStyles.text}>Welcome, {user?.username}</Text>
             <CustomButton

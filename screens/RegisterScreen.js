@@ -43,6 +43,7 @@ export default function RegisterScreen() {
       />
       <TextInput
         placeholder="Password"
+        textContentType="password"
         style={globalStyles.input}
         onChangeText={(value) => setPass(value)}
       />
