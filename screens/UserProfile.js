@@ -5,18 +5,27 @@ import { SvgUri } from "react-native-svg";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import IconButton from "../components/IconButton";
 import CustomButton from "../components/CustomButton";
-import { editUserById, getUserById, updateUsersAvatar } from "../store/authReducer";
+import {
+  editUserById,
+  getUserById,
+  updateUsersAvatar,
+} from "../store/authReducer";
 import { useEffect, useState } from "react";
 import { TextInput } from "react-native";
 
 export default function UserProfile() {
   const dispatch = useDispatch();
 
-  const [editInput, setEditInput] = useState(false);
-const [updatedUsername, setUpdatedUsername] = useState({username:''});
+  const [editUsername, setEditUsername] = useState(false);
+  const [editEmail, setEditEmail] = useState(false);
+  const [editNames, setEditNames] = useState(false);
+  const [updatedField, setUpdatedField] = useState({
+    username: "",
+    email: "",
+    names: "",
+  });
 
   const currentUser = useSelector((state) => state.auth.user);
-  
 
   const editIcon = (
     <MaterialCommunityIcons name="lead-pencil" size={18} color="#2D5DA4" />
@@ -31,26 +40,27 @@ const [updatedUsername, setUpdatedUsername] = useState({username:''});
     dispatch(updateUsersAvatar({ currentUser, randomNumber }));
   };
 
-  const handleEditUser = () => {
-      setEditInput(true);
-  };
-
-  
-
-  const updateUsername = () => {
-    
+  const updateField = () => {
     const data = {
-      currentUser, updatedUsername
+      currentUser,
+      updatedField,
+    };
+    dispatch(editUserById(data));
+    setUpdatedField("");
+    if (editUsername) {
+      setEditUsername(false);
     }
-    dispatch(editUserById(data))
-    setUpdatedUsername('');
-    setEditInput(false);
-    
-  }
+    if (editEmail) {
+      setEditEmail(false);
+    }
+    if (editNames) {
+      setEditNames(false);
+    }
+  };
 
   useEffect(() => {
     getUserById(currentUser?._id);
-  }, [currentUser, handleUpdateAvatar, updateUsername]);
+  }, [currentUser, handleUpdateAvatar, updateField]);
 
   return (
     <View style={globalStyles.container}>
@@ -61,28 +71,93 @@ const [updatedUsername, setUpdatedUsername] = useState({username:''});
         />
         <CustomButton title={"Change Avatar"} onPress={handleUpdateAvatar} />
       </View>
-      <View style={globalStyles.userProfileTextContainer}>
+      <View
+        style={
+          !editUsername
+            ? globalStyles.userProfileTextContainer
+            : globalStyles.userProfileInputContainer
+        }
+      >
         <Text style={{ fontSize: 20 }}>Username:</Text>
         <Text style={{ fontSize: 20 }}>{currentUser?.username}</Text>
-        {editInput &&  <><TextInput
-        placeholder="Username"
-        style={globalStyles.input}
-        onChangeText={(value) => setUpdatedUsername({ username: value })}
-      /><CustomButton title={'Update'} onPress={updateUsername}/></>}
+        <View>
+          {editUsername && (
+            <>
+              <TextInput
+                placeholder="Username"
+                style={globalStyles.input}
+                onChangeText={(value) => setUpdatedField({ username: value })}
+              />
+              <CustomButton title={"Update"} onPress={updateField} />
+              <CustomButton
+                title={"Cancel"}
+                onPress={() => setEditUsername(false)}
+              />
+            </>
+          )}
+        </View>
 
-        <IconButton title={editIcon} onPress={handleEditUser} />
+        {!editUsername && (
+          <IconButton title={editIcon} onPress={() => setEditUsername(true)} />
+        )}
       </View>
-      <View style={globalStyles.userProfileTextContainer}>
+      <View
+        style={
+          !editNames
+            ? globalStyles.userProfileTextContainer
+            : globalStyles.userProfileInputContainer
+        }
+      >
         <Text style={{ fontSize: 20 }}>Names:</Text>
         <Text style={{ fontSize: 20 }}>{currentUser?.names}</Text>
-
-        <IconButton title={editIcon} onPress={() => console.log("Edit")} />
+        <View>
+          {editNames && (
+            <>
+              <TextInput
+                placeholder="Names"
+                style={globalStyles.input}
+                onChangeText={(value) => setUpdatedField({ names: value })}
+              />
+              <CustomButton title={"Update"} onPress={updateField} />
+              <CustomButton
+                title={"Cancel"}
+                onPress={() => setEditNames(false)}
+              />
+            </>
+          )}
+        </View>
+        {!editNames && (
+          <IconButton title={editIcon} onPress={() => setEditNames(true)} />
+        )}
       </View>
-      <View style={globalStyles.userProfileTextContainer}>
+      <View
+        style={
+          !editEmail
+            ? globalStyles.userProfileTextContainer
+            : globalStyles.userProfileInputContainer
+        }
+      >
         <Text style={{ fontSize: 20 }}>Email:</Text>
         <Text style={{ fontSize: 20 }}>{currentUser?.email}</Text>
-
-        <IconButton title={editIcon} onPress={() => console.log("Edit")} />
+        <View>
+          {editEmail && (
+            <>
+              <TextInput
+                placeholder="Names"
+                style={globalStyles.input}
+                onChangeText={(value) => setUpdatedField({ email: value })}
+              />
+              <CustomButton title={"Update"} onPress={updateField} />
+              <CustomButton
+                title={"Cancel"}
+                onPress={() => setEditEmail(false)}
+              />
+            </>
+          )}
+        </View>
+        {!editEmail && (
+          <IconButton title={editIcon} onPress={() => setEditEmail(true)} />
+        )}
       </View>
       <View style={globalStyles.userProfileTextContainer}>
         <Text style={{ fontSize: 20, color: "red" }}>Delete account:</Text>

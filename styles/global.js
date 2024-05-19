@@ -48,6 +48,16 @@ export const globalStyles = StyleSheet.create({
     backgroundColor: "#2D5DA4",
     marginTop: 15,
   },
+  redButton:{
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    borderRadius: 4,
+    elevation: 3,
+    backgroundColor: "red",
+    marginTop: 15,
+  },
   textBtn: {
     fontSize: 16,
     lineHeight: 21,
@@ -87,6 +97,9 @@ export const globalStyles = StyleSheet.create({
     padding: 10,
     justifyContent: "space-between",
   },
+  userProfileInputContainer:{
+    flexDirection:'column'
+  },
   avatarProfile: {
     width: 120,
     height: 120,
@@ -99,7 +112,6 @@ export const globalStyles = StyleSheet.create({
   emojiBtn: {
     borderBottomLeftRadius: 5,
     borderTopLeftRadius: 5,
-    //backgroundColor: "#2D5DA4",
     padding: 8,
     paddingRight: 12,
     justifyContent: "center",

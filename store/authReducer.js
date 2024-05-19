@@ -85,7 +85,7 @@ export const getUserById = createAsyncThunk("user/get-user", async (userId) => {
 
 export const editUserById = createAsyncThunk("user/edit-user", async (data) => {
   const userId = data.currentUser._id;
-  const newData = data.updatedUsername;
+  const newData = data.updatedField;
 
   const response = await axios.put(`${editUserByIdRoute}${userId}`, newData);
 
