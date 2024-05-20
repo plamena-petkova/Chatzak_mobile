@@ -1,4 +1,12 @@
-import { Text, View, ScrollView } from "react-native";
+import {
+  Text,
+  View,
+  ScrollView,
+  Alert,
+  StyleSheet,
+  Pressable,
+  Modal,
+} from "react-native";
 import { globalStyles } from "../styles/global";
 import { useDispatch, useSelector } from "react-redux";
 import { SvgUri } from "react-native-svg";
@@ -6,19 +14,25 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import IconButton from "../components/IconButton";
 import CustomButton from "../components/CustomButton";
 import {
+  deleteUserById,
   editUserById,
   getUserById,
   updateUsersAvatar,
 } from "../store/authReducer";
 import { useEffect, useState } from "react";
 import { TextInput } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import DeleteModal from "../components/DeleteModal";
 
 export default function UserProfile() {
   const dispatch = useDispatch();
 
+
   const [editUsername, setEditUsername] = useState(false);
   const [editEmail, setEditEmail] = useState(false);
   const [editNames, setEditNames] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+
   const [updatedField, setUpdatedField] = useState({
     username: "",
     email: "",
@@ -57,6 +71,12 @@ export default function UserProfile() {
       setEditNames(false);
     }
   };
+
+  const handleModal = (modalVisible) => {
+    setModalVisible(modalVisible)
+  }
+
+
 
   useEffect(() => {
     getUserById(currentUser?._id);
@@ -162,8 +182,11 @@ export default function UserProfile() {
       <View style={globalStyles.userProfileTextContainer}>
         <Text style={{ fontSize: 20, color: "red" }}>Delete account:</Text>
         <Text style={{ fontSize: 20 }}>{currentUser?.username}</Text>
-        <IconButton title={deleteIcon} onPress={() => console.log("Edit")} />
+        <IconButton title={deleteIcon} onPress={() => setModalVisible(true)} />
+        <DeleteModal modalVisible={modalVisible} handleModal={handleModal}/>
       </View>
     </View>
   );
 }
+
+

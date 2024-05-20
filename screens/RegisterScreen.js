@@ -11,12 +11,35 @@ import {
 } from "react-native";
 import { globalStyles } from "../styles/global";
 import CustomButton from "../components/CustomButton";
+import { fetchUsers, register } from "../store/authReducer";
+import { useDispatch } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
 
 export default function RegisterScreen() {
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+
   const [email, setEmail] = useState("");
   const [names, setNames] = useState("");
   const [username, setUsername] = useState("");
-  const [pass, setPass] = useState("");
+  const [password, setPassword] = useState("");
+
+  const submitRegisterHandler = async () => {
+    const data = { username, password, email, names };
+
+    if (email && names && username && password) {
+      dispatch(register(data))
+        .unwrap()
+        .then(() => {
+          navigation.navigate("Home");
+          dispatch(fetchUsers());
+        })
+        .catch((error) => {
+          console.error("Error", error.message);
+          return;
+        });
+    }
+  };
 
   return (
     <View style={globalStyles.container}>
@@ -45,9 +68,9 @@ export default function RegisterScreen() {
         placeholder="Password"
         textContentType="password"
         style={globalStyles.input}
-        onChangeText={(value) => setPass(value)}
+        onChangeText={(value) => setPassword(value)}
       />
-      <CustomButton title="Register" />
+      <CustomButton title="Register" onPress={submitRegisterHandler} />
     </View>
   );
 }
