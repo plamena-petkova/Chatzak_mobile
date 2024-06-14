@@ -16,6 +16,7 @@ import { firebase, storage } from "../config";
 import * as FileSystem from "expo-file-system";
 import { getDownloadURL, getStorage, ref } from "firebase/storage";
 import IconButton from "../components/IconButton";
+import { sendPushNotification, token } from "./HomeScreen";
 
 export default function UsersChat() {
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ export default function UsersChat() {
   const [arrivalMsg, setArrivalMsg] = useState("");
   const [isOpenEmojiPicker, setIsOpenEmojiPicker] = useState(false);
   const [image, setImage] = useState(null);
+
 
   const currentChat = useSelector((state) => state.chat.currentChat);
   const currentUser = useSelector((state) => state.auth.user);
@@ -118,10 +120,21 @@ export default function UsersChat() {
     }
   }, [currentUser, dispatch]);
 
+  const sendPush = async () => {
+    try {
+      await sendPushNotification(token, `${currentChat.names} says:`, msg);
+      alert('Message sent and notification triggered');
+    } catch (error) {
+      console.error('Failed to send push notification:', error);
+      alert('Failed to send notification');
+    }
+  }
+
   useEffect(() => {
     if (socket) {
       socket.on("msg-receive", (data) => {
         setArrivalMsg({ fromSelf: false, message: data.message });
+        sendPush();
       });
       socket.on("msg-edited", (data) => {
         setArrivalMsg({ fromSelf: false, message: data.message });
