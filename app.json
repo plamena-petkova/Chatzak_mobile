@@ -35,6 +35,12 @@
     "env": {
       "production": ".env",
       "development": ".env"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "8c6c2f20-b807-4b72-9eae-a947f6b2d075"
+      }
+    },
+    "owner": "pl.petkova"
   }
 }

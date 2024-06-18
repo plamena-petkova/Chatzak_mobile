@@ -1,5 +1,5 @@
-//export const host = "http://localhost:5000";
-export const host = "https://chatzak-server.onrender.com"
+export const host = "http://192.168.0.104:5000";//localhost
+//export const host = "https://chatzak-server.onrender.com"
 export const loginRoute = `${host}/api/auth/login`;
 export const registerRoute = `${host}/api/auth/register`;
 export const allUsersRoute = `${host}/api/auth/all-users`;

@@ -4,6 +4,7 @@ import CustomButton from "../components/CustomButton";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../store/authReducer";
+import PushNotification from "../utils/pushNotifications";
 
 
 export default function HomeScreen() {
@@ -22,6 +23,7 @@ export default function HomeScreen() {
           source={require("../assets/chatzakLogo.png")}
         />
         <Text style={globalStyles.heading}>Welcome to Chatzak</Text>
+        <PushNotification />
         <Text style={globalStyles.text}>
           Chatzak is a modern chat application designed to connect people with
           ease. Whether you're looking to chat with friends, family, or
