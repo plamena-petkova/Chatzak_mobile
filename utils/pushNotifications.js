@@ -15,24 +15,29 @@ Notifications.setNotificationHandler({
 
 
 
-async function sendPushNotification(expoPushToken) {
+async function sendPushNotification(expoPushToken, msg) {
+
+  console.log('Expo', expoPushToken)
+
   const message = {
     to: expoPushToken,
     sound: 'default',
     title: 'Original Title',
     body: 'And here is the body!',
-    data: { someData: 'goes here' },
+    data: { someData: msg },
   };
 
-  await fetch('https://exp.host/--/api/v2/push/send', {
+  const response = await fetch('https://exp.host/--/api/v2/push/send', {
     method: 'POST',
     headers: {
       Accept: 'application/json',
       'Accept-encoding': 'gzip, deflate',
       'Content-Type': 'application/json',
+      'Authorization':'Bearer Qx234Jp1gDKcxDmMQhIhaNSqfMqEQELEor_PGEMd'
     },
     body: JSON.stringify(message),
   });
+  console.log('Response', response)
 }
 
 
