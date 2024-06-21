@@ -33,13 +33,12 @@ async function sendPushNotification(expoPushToken, msg) {
       Accept: 'application/json',
       'Accept-encoding': 'gzip, deflate',
       'Content-Type': 'application/json',
-      'Authorization':'Bearer Qx234Jp1gDKcxDmMQhIhaNSqfMqEQELEor_PGEMd'
+      'Authorization': `Bearer ${process.env.EXPO_PUBLIC_ACCESS_TOKEN_PUSH}`
     },
     body: JSON.stringify(message),
   });
-  console.log('Response', response)
-}
 
+}
 
 function handleRegistrationError(errorMessage) {
   alert(errorMessage);
@@ -78,7 +77,6 @@ async function registerForPushNotificationsAsync() {
             projectId: Constants.expoConfig.extra.eas.projectId,
           })
       ).data;
-      console.log(pushTokenString);
       return pushTokenString;
     } catch (e) {
       handleRegistrationError(`${e}`);
