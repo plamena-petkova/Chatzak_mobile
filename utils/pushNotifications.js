@@ -15,7 +15,7 @@ Notifications.setNotificationHandler({
 
 
 
-async function sendPushNotification(expoPushToken, msg) {
+export async function sendPushNotification(expoPushToken, msg) {
 
   console.log('Expo', expoPushToken)
 

@@ -4,7 +4,8 @@ import CustomButton from "../components/CustomButton";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../store/authReducer";
-import PushNotification from "../utils/pushNotifications";
+import PushNotification, { sendPushNotification } from "../utils/pushNotifications";
+import { useEffect } from "react";
 
 
 export default function HomeScreen() {
@@ -13,6 +14,14 @@ export default function HomeScreen() {
   const user = useSelector((state) => state.auth.user);
   const allUsers = useSelector((state) => state.auth.allUsers);
   const dispatch = useDispatch();
+
+  async function notification() {
+    await sendPushNotification('ExponentPushToken[InZNcQG0UvdIxFny5i5OKd]', 'Here us the message')
+   }
+
+  useEffect(() => {
+    notification()
+  }, [])
   
 
   return (
