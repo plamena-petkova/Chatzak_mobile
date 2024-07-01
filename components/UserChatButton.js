@@ -1,7 +1,7 @@
-import { Text, Pressable, Image, View } from "react-native";
+import { Text, Pressable, View } from "react-native";
 import { globalStyles } from "../styles/global";
-import { SvgUri, SvgXml } from "react-native-svg";
-import { useSelector } from "react-redux";
+import { SvgUri } from "react-native-svg";
+
 
 export default function UserChatButton(props) {
   const { onPress, user } = props;

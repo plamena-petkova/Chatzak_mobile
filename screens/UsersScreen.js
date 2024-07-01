@@ -1,21 +1,12 @@
-import { StatusBar } from "expo-status-bar";
-import { useEffect, useState } from "react";
 import {
-  Button,
-  StyleSheet,
-  Text,
   View,
-  Image,
-  TextInput,
-  FlatList,
-  SafeAreaView,
   ScrollView,
 } from "react-native";
 import { globalStyles } from "../styles/global";
 
 import UserChatButton from "../components/UserChatButton";
 import { useNavigation } from "@react-navigation/native";
-import { getAllMessages, setCurrentChat } from "../store/chatReducer";
+import { setCurrentChat } from "../store/chatReducer";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function UsersScreen() {

@@ -10,7 +10,6 @@ import {
   updateAvatarRoute,
 } from "../utils/apiRoutes";
 import axios from "axios";
-import { Alert } from "react-native";
 
 const initialState = {
   user: {},

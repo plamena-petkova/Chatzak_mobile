@@ -12,7 +12,6 @@ export default function HomeScreen() {
   const navigation = useNavigation();
 
   const user = useSelector((state) => state.auth.user);
-  const allUsers = useSelector((state) => state.auth.allUsers);
   const dispatch = useDispatch();
 
   async function notification() {

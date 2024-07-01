@@ -1,4 +1,4 @@
-import { Button, Text, Pressable } from "react-native";
+import { Text, Pressable } from "react-native";
 import { globalStyles } from "../styles/global";
 
 export default function IconButton(props) {

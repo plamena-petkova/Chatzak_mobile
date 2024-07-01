@@ -1,7 +1,6 @@
 import { Modal, StyleSheet, Text, View } from "react-native";
 import CustomButton from "./CustomButton";
 import { useNavigation } from "@react-navigation/native";
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteUserById, logout } from "../store/authReducer";
 

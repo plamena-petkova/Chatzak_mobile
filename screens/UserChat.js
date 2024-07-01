@@ -12,11 +12,10 @@ import EmojiPicker from "rn-emoji-keyboard";
 import IconEntypo from "react-native-vector-icons/Entypo";
 import IconAnt from "react-native-vector-icons/AntDesign";
 import * as ImagePicker from "expo-image-picker";
-import { firebase, storage } from "../config";
+import { firebase } from "../config";
 import * as FileSystem from "expo-file-system";
 import { getDownloadURL, getStorage, ref } from "firebase/storage";
 import IconButton from "../components/IconButton";
-import { sendPushNotification } from "../utils/pushNotifications";
 
 export default function UsersChat() {
   const dispatch = useDispatch();
