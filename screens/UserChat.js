@@ -16,6 +16,7 @@ import { firebase } from "../config";
 import * as FileSystem from "expo-file-system";
 import { getDownloadURL, getStorage, ref } from "firebase/storage";
 import IconButton from "../components/IconButton";
+import { SvgUri } from "react-native-svg";
 
 export default function UsersChat() {
   const dispatch = useDispatch();
@@ -121,6 +122,7 @@ export default function UsersChat() {
   useEffect(() => {
     if (socket) {
       socket.on("msg-receive", (data) => {
+        console.log("Data", data);
         setArrivalMsg({ fromSelf: false, message: data.message });
       });
       socket.on("msg-edited", (data) => {
@@ -161,19 +163,36 @@ export default function UsersChat() {
         inverted
         data={[...messages].reverse()}
         renderItem={(msg) => {
-
-
           return (
-            <View key={msg.item.id}>
-              <Text
-                style={
-                  msg.item.fromSelf
-                    ? globalStyles.messageChipFromMe
-                    : globalStyles.messageChipForMe
-                }
-              >
-                {msg.item.message}
-              </Text>
+            <View key={msg.item.id} >
+              {!msg.item.fromSelf && (
+                <View style={{flexDirection:'row', justifyContent:'flex-start'}}>
+                  <View
+                    style={globalStyles.avatarStyleCurrentUser}
+                    key={currentChat._id}
+                  >
+                    <SvgUri uri={currentUser.avatarImg} />
+                  </View>
+                  <Text style={globalStyles.messageChipForMe}>
+                    {msg.item.message}
+                  </Text>
+                </View>
+              )}
+
+              {msg.item.fromSelf && (
+                <View style={{flexDirection:'row', justifyContent:'flex-end'}}>
+                  <Text style={globalStyles.messageChipFromMe}>
+                    {msg.item.message}
+                  </Text>
+
+                  <View
+                    style={globalStyles.avatarStyleCurrentChat}
+                    key={currentChat._id}
+                  >
+                    <SvgUri uri={currentChat.avatarImg} />
+                  </View>
+                </View>
+              )}
             </View>
           );
         }}
@@ -205,14 +224,12 @@ export default function UsersChat() {
           open={isOpenEmojiPicker}
           onClose={() => setIsOpenEmojiPicker(false)}
         />
-        
 
         <SendButton title={"Send"} onPress={() => handleSendMsg(msg)} />
       </View>
     </View>
   );
 }
-
 
 //<PictureButton title={pictureIcon} onPress={selectImage} />
 
