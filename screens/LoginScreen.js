@@ -6,6 +6,7 @@ import CustomButton from "../components/CustomButton";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUsers, login } from "../store/authReducer";
+import { socket } from "../socket";
 
 export default function LoginScreen() {
   const navigation = useNavigation();
@@ -23,6 +24,7 @@ export default function LoginScreen() {
         .then(() => {
           navigation.navigate("Home");
           dispatch(fetchUsers());
+          socket.connect()
         })
         .catch((error) => {
           console.error("Error", error.message);

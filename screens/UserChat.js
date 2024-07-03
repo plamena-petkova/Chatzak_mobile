@@ -122,7 +122,6 @@ export default function UsersChat() {
   useEffect(() => {
     if (socket) {
       socket.on("msg-receive", (data) => {
-        console.log("Data", data);
         setArrivalMsg({ fromSelf: false, message: data.message });
       });
       socket.on("msg-edited", (data) => {
@@ -231,21 +230,3 @@ export default function UsersChat() {
   );
 }
 
-//<PictureButton title={pictureIcon} onPress={selectImage} />
-
-/*
-          if (msg.item.message.startsWith("https://")) {
-            return (
-              <View key={msg.item.id}>
-                <Image
-                  source={{ uri: msg.item.message }}
-                  resizeMode="contain"
-                  style={{
-                    width: 200,
-                    height: 200,
-                  }}
-                />
-              </View>
-            );
-          }
-*/
